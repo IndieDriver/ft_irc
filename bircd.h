@@ -15,6 +15,7 @@
 # define MAX(a,b)	((a > b) ? a : b)
 
 # define USAGE		"Usage: %s port\n"
+# define CL_USAGE   "Usage: %s [hostname [port]]\n"
 
 typedef struct	s_fd
 {
@@ -44,6 +45,7 @@ typedef struct  s_env_client
   int           port;
   int           max;
   int           r;
+  int           connected;
   fd_set        fd_read;
 }               t_env_client;
 

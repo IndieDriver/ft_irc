@@ -12,9 +12,10 @@ void	check_fd_client(t_env_client *e)
     if (strstr(e->stdin_fd->buf_write, "\n")) {
       e->stdin_fd->buf_write[BUF_SIZE] = '\0';
     }
-    e->server_fd->fct_write(e, e->stdin_fd->buf_write);
+    if (e->connected)
+      e->server_fd->fct_write(e, e->stdin_fd->buf_write);
   }
-  else if (FD_ISSET(e->server_soc, &e->fd_read))
+  else if (e->connected && FD_ISSET(e->server_soc, &e->fd_read))
   {
     e->server_fd->fct_read(e);
   }

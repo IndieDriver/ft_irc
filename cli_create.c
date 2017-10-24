@@ -11,11 +11,14 @@ void			cli_create(t_env_client *e, const char *addr, int port)
   struct protoent	*pe;
   struct hostent	*hostinfo;
 
+  if (addr == NULL)
+    return ;
   pe = (struct protoent*)Xv(NULL, getprotobyname("tcp"), "getprotobyname");
   s = X(-1, socket(PF_INET, SOCK_STREAM, pe->p_proto), "socket");
   hostinfo = gethostbyname(addr);
   if (hostinfo == NULL) {
     printf("Unknown host %s\n", addr);
+    return ;
   }
   sin.sin_family = AF_INET;
   sin.sin_addr = *(struct in_addr*)hostinfo->h_addr;
@@ -31,5 +34,5 @@ void			cli_create(t_env_client *e, const char *addr, int port)
   e->stdin_fd->type = FD_SERV;
   e->stdin_fd->fct_read = read_from_server;
   e->stdin_fd->fct_write = write_to_server;
-
+  e->connected = 1;
 }

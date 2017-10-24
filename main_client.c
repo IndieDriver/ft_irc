@@ -12,6 +12,7 @@ void	clean_fd(t_fd *fd)
 
 void		init_env_client(t_env_client *e)
 {
+  e->connected = 0;
   e->stdin_fd = (t_fd*)Xv(NULL, malloc(sizeof(t_fd*)), "malloc");
   e->server_fd = (t_fd*)Xv(NULL, malloc(sizeof(t_fd*)), "malloc");
 
@@ -21,13 +22,16 @@ void		init_env_client(t_env_client *e)
 
 char	*get_opt(t_env_client *e, int ac, char **av)
 {
-  if (ac != 3) //TODO: handle optional parameter
+  char *hostname;
+
+  hostname = (ac == 2 || ac == 3) ? ft_strdup(av[1]) : NULL;
+  e->port = ac == 3 ? ft_atoi(av[2]) : 6697;
+  if (ac > 3)
   {
-      fprintf(stderr, USAGE, av[0]);
-      exit(1);
+    fprintf(stderr, CL_USAGE, av[0]);
+    exit(1);
   }
-  e->port = atoi(av[2]);
-  return (ft_strdup(av[1]));
+  return (hostname);
 }
 
 int	main(int ac, char **av)
