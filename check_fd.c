@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/25 11:54:38 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/25 17:37:23 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ void	check_fd_client(t_env_client *e)
 			e->stdin_fd->buf_write[BUF_SIZE] = '\0';
 		}
 		if (e->connected)
-			e->server_fd->fct_write(e, e->stdin_fd->buf_write);
+		{
+			//char *req = get_request(e, e->stdin_fd->buf_write);
+			//ft_strcpy(e->stdin_fd->buf_write, get_request(e->stdin);
+			e->server_fd->fct_write(e, get_request(e, e->stdin_fd->buf_write));
+		}
 	}
 	else if (e->connected && FD_ISSET(e->server_soc, &e->fd_read))
 	{

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/25 12:31:29 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/25 17:01:11 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/select.h>
 # include "libft/libft.h"
+# include <assert.h>
 
 # define FD_FREE	0
 # define FD_SERV	1
@@ -77,5 +78,7 @@ void			init_fd_client(t_env_client *e);
 void			do_select(t_env *e);
 void			check_fd_server(t_env *e);
 void			check_fd_client(t_env_client *e);
+
+char			*get_request(t_env_client *e, char *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/25 11:54:17 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/25 16:54:04 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ void	cli_create(t_env_client *e, const char *addr, int port)
 	sin.sin_port = htons(port);
 	X(-1, connect(s, (const struct sockaddr*)&sin, sizeof(struct sockaddr_in)),
 			"connect");
+	printf("addr4: %s\n", addr);
 	init_client(e, s);
 }
