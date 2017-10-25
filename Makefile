@@ -10,8 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-INC = /
-
 SRCSERVER =	main_server.c	\
 			x.c				\
 			main_loop.c		\
@@ -43,8 +41,7 @@ SERVER = serveur
 CLIENT = client
 CC = clang
 RM = rm -f
-#CFLAGS = -Wall -Werror -Wextra -pedantic
-CFLAGS = -pedantic -g
+CFLAGS = -Wall -Werror -Wextra -pedantic -g
 
 LIB_PATH = ./libft/
 LIB_NAME = -lft
@@ -60,10 +57,10 @@ lib:
 	make -C ./libft
 
 $(SERVER): $(OBJSERVER)
-	$(CC) $(CFLAGS) $(LFLAGS) $(OBJSERVER) -o $@
+	$(CC) $(CFLAGS) $(OBJSERVER) $(LFLAGS) -o $@
 
 $(CLIENT): $(OBJCLIENT)
-	$(CC) $(CFLAGS) $(LFLAGS) $(OBJCLIENT) -o $@
+	$(CC) $(CFLAGS) $(OBJCLIENT) $(LFLAGS) -o $@
 
 %.o: %.c
 	$(CC) $(INC) -o $@ -c $^ $(CFLAGS)

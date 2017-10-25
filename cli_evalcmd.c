@@ -27,9 +27,8 @@ typedef enum {
 	RPL_WELCOME = 1
 }		e_ircmd;
 
-char	*get_prvmsg(char *to, char *content)
+char	*get_prvmsg(char *to, const char *content)
 {
-	//"PRIVMSG #game1 : msg"
 	char *msg;
 
 	msg = malloc(sizeof(char) * 512);
@@ -42,6 +41,28 @@ char	*get_prvmsg(char *to, char *content)
 	printf("%s", msg);
 
 	return (msg);
+}
+
+char	*cmd_msg(char **split)
+{
+	int i;
+	char msg[512];
+
+	msg[0] = '\0';
+	if (split[1] == NULL)
+	{
+		ft_putendl_fd("Invalid usage: /msg <nick> <message>", 2);
+		return (NULL);
+	}
+	i = 2;
+	while (split[i])
+	{
+		if (i != 2)
+			ft_strncat(msg, " ", 512);
+		ft_strncat(msg, split[i], 512);
+		i++;
+	}
+	return (get_prvmsg(split[1], msg));
 }
 
 
@@ -137,11 +158,14 @@ char	*get_command(t_env_client *e, char **split)
 		tmp = cmd_leave(split);
 	else if (ft_strstr(split[0], "/who"))
 		tmp = cmd_who(split);
+	else if (ft_strstr(split[0], "/msg"))
+		tmp = cmd_msg(split);
 	return (tmp);
 }
 
 char	*get_request(t_env_client *e, char *cmd)
 {
+	int i;
 	char **split = ft_strsplit(cmd, ' ');
 
 	if (split != NULL)
@@ -153,5 +177,12 @@ char	*get_request(t_env_client *e, char *cmd)
 	}
 	if (cmd == NULL)
 		cmd = "";
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free (split);
 	return cmd;
 }
