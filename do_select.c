@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   do_select.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/25 11:23:33 by amathias          #+#    #+#             */
+/*   Updated: 2017/10/25 11:49:50 by amathias         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdlib.h>
 #include "bircd.h"
 
 void	do_select(t_env *e)
 {
-  e->r = select(e->max + 1, &e->fd_read, &e->fd_write, NULL, NULL);
+	e->r = select(e->max + 1, &e->fd_read, &e->fd_write, NULL, NULL);
 }
