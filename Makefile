@@ -6,7 +6,7 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/10/25 16:42:03 by amathias         ###   ########.fr        #
+#    Updated: 2017/10/26 12:22:05 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCSERVER =	main_server.c	\
 			client_write.c	\
 			cli_evalcmd.c	\
 			cli_create.c	\
+			irc_cmd.c		\
 
 SRCCLIENT =	main_client.c	\
 			x.c				\
@@ -34,6 +35,7 @@ SRCCLIENT =	main_client.c	\
 			init_fd.c		\
 			do_select.c		\
 			cli_evalcmd.c	\
+			irc_cmd.c		\
 
 OBJSERVER = $(SRCSERVER:.c=.o)
 OBJCLIENT = $(SRCCLIENT:.c=.o)

@@ -6,62 +6,12 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 10:10:57 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/26 14:35:54 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "bircd.h"
-
-/*
-	/connect <machine> [port]
-	/nick <nickname>
-	/join <#chan>
-	/leave [#channel]
-	/who
-	/msg <nick> <message>
-*/
-
-typedef enum {
-	RPL_NONE = 0,
-	RPL_WELCOME = 1
-}		e_ircmd;
-
-char	*get_prvmsg(char *to, const char *content)
-{
-	char *msg;
-
-	msg = malloc(sizeof(char) * 512);
-	msg[0] = '\0';
-	ft_strncat(msg, "PRIVMSG ", 512);
-	ft_strncat(msg, to, 512);
-	ft_strncat(msg, " :", 512);
-	ft_strncat(msg, content, 512);
-	ft_strncat(msg, "\r\n", 512);
-	return (msg);
-}
-
-char	*cmd_msg(char **split)
-{
-	int i;
-	char msg[512];
-
-	msg[0] = '\0';
-	if (split[1] == NULL)
-	{
-		ft_putendl_fd("Invalid usage: /msg <nick> <message>", 2);
-		return (NULL);
-	}
-	i = 2;
-	while (split[i])
-	{
-		if (i != 2)
-			ft_strncat(msg, " ", 512);
-		ft_strncat(msg, split[i], 512);
-		i++;
-	}
-	return (get_prvmsg(split[1], msg));
-}
 
 char	*cmd_connect(t_env_client *e, char **split)
 {
@@ -75,112 +25,98 @@ char	*cmd_connect(t_env_client *e, char **split)
 	return (NULL);
 }
 
-char	*cmd_nick(char **split)
+char	*append_arg(char *msg, enum e_arg_type arg_type, char **split,
+			int split_index)
 {
-	char *msg;
+	int i;
 
-	if (split[1] == NULL)
+	if (arg_type == SINGLE || (arg_type == OPTIONAL && split[split_index]))
 	{
-		ft_putendl_fd("Invalid usage: /nick <nickname>", 2);
-		return (NULL);
+		ft_strncat(msg, split[split_index], 510);
 	}
-	msg = malloc (sizeof(char) * 512);
-	msg[0] = '\0';
-	ft_strncat(msg, "NICK ", 512);
-	ft_strncat(msg, split[1], 512);
-	ft_strncat(msg, "\r\n", 512);
-	return (msg);
-}
-
-char	*cmd_join(char **split)
-{
-	char *msg;
-
-	if (split[1] == NULL)
+	else if (arg_type == MULTI)
 	{
-		ft_putendl_fd("Invalid usage: /join <chan>", 2);
-		return (NULL);
+		i = split_index;
+		while (split[i])
+		{
+			if (i != split_index)
+				ft_strncat(msg, " ", 510);
+			ft_strncat(msg, split[i], 510);
+			i++;
+		}
 	}
-	msg = malloc (sizeof(char) * 512);
+	return (msg);
+}
+
+char	*get_command_msg(t_client_command cli_cmd, char **split)
+{
+	char	*msg;
+	int		last_argument;
+
+	last_argument = arg_with_colon(cli_cmd);
+	msg = malloc(sizeof(char) * 510); //510 'cause I need CRLF
 	msg[0] = '\0';
-	ft_strncat(msg, "JOIN ", 512);
-	ft_strncat(msg, split[1], 512);
+	ft_strncat(msg, cli_cmd.irc_cmd, 510);
+	ft_strncat(msg, " ", 510);
+	msg = append_arg(msg, cli_cmd.arg1, split, 1);
+
+	last_argument == 2 ? ft_strncat(msg, " :", 510) : ft_strncat(msg, " ", 510);
+	msg = append_arg(msg, cli_cmd.arg2, split, 2);
+
+	last_argument == 3 ? ft_strncat(msg, " :", 510) : ft_strncat(msg, " ", 510);
+	msg = append_arg(msg, cli_cmd.arg3, split, 3);
+
+	last_argument == 4 ? ft_strncat(msg, " :", 510) : ft_strncat(msg, " ", 510);
+	msg = append_arg(msg, cli_cmd.arg4, split, 4);
 	ft_strncat(msg, "\r\n", 512);
 	return (msg);
 }
 
-char	*cmd_leave(char **split)
+char	*handle_client_command(t_env_client *e, char **split)
 {
-	char *msg;
-
-	if (split[1] == NULL)
-	{
-		ft_putendl_fd("Invalid usage: /leave <chan>", 2);
-		return (NULL);
-	}
-	msg = malloc (sizeof(char) * 512);
-	msg[0] = '\0';
-	ft_strncat(msg, "PART ", 512);
-	ft_strncat(msg, split[1], 512);
-	ft_strncat(msg, "\r\n", 512);
-	return (msg);
-}
-
-char	*cmd_who(char **split)
-{
-	char *msg;
-
-	msg = malloc (sizeof(char) * 512);
-	msg[0] = '\0';
-	ft_strncat(msg, "USERS", 512);
-	ft_strncat(msg, split[1], 512);
-	ft_strncat(msg, "\r\n", 512);
-	return (msg);
-}
-
-char	*get_command(t_env_client *e, char **split)
-{
-	char *tmp;
+	char				*tmp;
+	int					command_index;
+	t_client_command	client_cmd;
 
 	tmp = NULL;
 	if (ft_strstr(split[0], "/connect"))
 		tmp = cmd_connect(e, split);
-	else if (ft_strstr(split[0], "/nick"))
-		tmp = cmd_nick(split);
-	else if (ft_strstr(split[0], "/join"))
-		tmp = cmd_join(split);
-	else if (ft_strstr(split[0], "/leave"))
-		tmp = cmd_leave(split);
-	else if (ft_strstr(split[0], "/who"))
-		tmp = cmd_who(split);
-	else if (ft_strstr(split[0], "/msg"))
-		tmp = cmd_msg(split);
 	else
-		ft_putendl_fd("Unrecognized command", 2);
-
+	{
+		command_index = get_client_command_index(split[0]);
+		if (command_index == -1)
+		{
+			ft_putendl_fd("Unrecognized command\n", 2);
+			return (NULL);
+		}
+		client_cmd = g_client_commands[command_index];
+		if (is_valid_command(client_cmd, split))
+			tmp = get_command_msg(client_cmd, split);
+		else
+			ft_putendl_fd(client_cmd.usage, 2);
+	}
 	return (tmp);
 }
 
 char	*get_request(t_env_client *e, char *cmd)
 {
-	int i;
-	char **split = ft_strsplit(cmd, ' ');
+	char	**split;
+	int		i;
+	char	*request;
 
+	request = NULL;
+	split = ft_strsplit(cmd, ' ');
 	if (split != NULL)
 	{
 		if (split[0][0] == '/')
-			cmd = get_command(e, split);
-		else
-			cmd = get_prvmsg("#chan", cmd);
+			request = handle_client_command(e, split);
 	}
-	if (cmd == NULL)
-		cmd = "";
 	i = 0;
 	while (split[i])
 	{
 		free(split[i]);
 		i++;
 	}
-	free (split);
-	return cmd;
+	free(split);
+	return (request);
 }

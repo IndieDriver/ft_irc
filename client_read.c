@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:51 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/25 11:49:31 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/26 10:20:19 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	read_from_client(t_env *e, int cs)
 		i = 0;
 		while (i < e->maxfd)
 		{
-			if ((e->fds[i].type == FD_CLIENT) &&
-					(i != cs))
+			if ((e->fds[i].type == FD_CLIENT) && (i != cs))
 				send(i, e->fds[cs].buf_read, r, 0);
 			i++;
 		}
