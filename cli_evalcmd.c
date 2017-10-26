@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/25 18:01:06 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/26 10:10:57 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 	/connect <machine> [port]
 	/nick <nickname>
-	/join <#chan>,
+	/join <#chan>
 	/leave [#channel]
 	/who
 	/msg <nick> <message>
@@ -38,8 +38,6 @@ char	*get_prvmsg(char *to, const char *content)
 	ft_strncat(msg, " :", 512);
 	ft_strncat(msg, content, 512);
 	ft_strncat(msg, "\r\n", 512);
-	printf("%s", msg);
-
 	return (msg);
 }
 
@@ -65,11 +63,8 @@ char	*cmd_msg(char **split)
 	return (get_prvmsg(split[1], msg));
 }
 
-
-
 char	*cmd_connect(t_env_client *e, char **split)
 {
-
 	if (split[1] == NULL)
 	{
 		ft_putendl_fd("Invalid usage: /connect <machine> [port]", 2);
@@ -160,6 +155,9 @@ char	*get_command(t_env_client *e, char **split)
 		tmp = cmd_who(split);
 	else if (ft_strstr(split[0], "/msg"))
 		tmp = cmd_msg(split);
+	else
+		ft_putendl_fd("Unrecognized command", 2);
+
 	return (tmp);
 }
 
