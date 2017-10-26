@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_fd.c                                         :+:      :+:    :+:   */
+/*   users_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/25 11:22:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 15:55:07 by amathias         ###   ########.fr       */
+/*   Created: 2017/10/26 18:10:37 by amathias          #+#    #+#             */
+/*   Updated: 2017/10/26 18:15:44 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "bircd.h"
 
-void	clean_fd(t_fd *fd)
+t_user	*get_user(t_serv *serv, char *nick)
 {
-	fd->type = FD_FREE;
-	fd->fct_read = NULL;
-	fd->fct_write = NULL;
-	fd->hostname = NULL;
-	fd->nick = NULL;
-	fd->user = NULL;
+	t_user	*list;
+
+	list = serv->users;
+	if (list)
+	{
+		while (list)
+		{
+			if (list->nick != NULL && ft_strcmp(list->nick, nick) == 0)
+				return (list);
+			list = list->next;
+		}
+	}
+	return (NULL);
 }

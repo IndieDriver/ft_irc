@@ -1,24 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_fd.c                                         :+:      :+:    :+:   */
+/*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/25 11:22:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 15:55:07 by amathias         ###   ########.fr       */
+/*   Created: 2017/10/26 14:49:38 by amathias          #+#    #+#             */
+/*   Updated: 2017/10/26 17:45:46 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "bircd.h"
+#ifndef SERVER_H
+# define SERVER_H
 
-void	clean_fd(t_fd *fd)
+# define MAX_CHANNEL	512
+# define MAX_USER		4096
+
+typedef struct		s_user
 {
-	fd->type = FD_FREE;
-	fd->fct_read = NULL;
-	fd->fct_write = NULL;
-	fd->hostname = NULL;
-	fd->nick = NULL;
-	fd->user = NULL;
-}
+	char			*nick;
+	char			*user;
+	char			*hostname;
+	void			*next;
+}					t_user;
+
+typedef struct		s_chan
+{
+	char			*name;
+	t_user			*users;
+	void			*next;
+}					t_chan;
+
+typedef struct		s_serv
+{
+	t_chan			*channels;
+	t_user			*users;
+}					t_serv;
+
+#endif

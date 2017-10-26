@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 14:31:26 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/26 15:14:59 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	register_connection(t_env_client *e)
 	ft_strncat(request, "/user ", 512);
 	ft_strncat(request, login, 512);
 	ft_strncat(request, " * * default user", 512);
-	printf("request: %s\n", request);
 	cmd = get_request(e, request);
 	e->server_fd->fct_write(e, cmd);
 	free(cmd);

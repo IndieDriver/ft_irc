@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_fd.c                                         :+:      :+:    :+:   */
+/*   users.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/25 11:22:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 15:55:07 by amathias         ###   ########.fr       */
+/*   Created: 2017/10/26 17:46:00 by amathias          #+#    #+#             */
+/*   Updated: 2017/10/26 18:07:59 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "bircd.h"
 
-void	clean_fd(t_fd *fd)
+void	add_user_to_list(t_user **users, t_user *user)
 {
-	fd->type = FD_FREE;
-	fd->fct_read = NULL;
-	fd->fct_write = NULL;
-	fd->hostname = NULL;
-	fd->nick = NULL;
-	fd->user = NULL;
+	if (*users)
+	{
+		user->next = *users;
+		*users = user;
+	}
+}
+
+t_user	*new_user(char *nick, char *username, char *hostname)
+{
+	t_user *user;
+
+	if ((user = malloc(sizeof(t_user))) == NULL)
+		return (NULL);
+	user->nick = nick;
+	user->user = username;
+	user->hostname = hostname;
+	user->next = NULL;
+	return (user);
 }

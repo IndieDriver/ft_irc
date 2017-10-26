@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 14:01:43 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/26 18:08:44 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <sys/select.h>
 # include "libft/libft.h"
-# include <assert.h>
+# include "server.h"
 
 # define FD_FREE	0
 # define FD_SERV	1
@@ -38,6 +38,15 @@ enum				e_arg_type
 					MULTI = 3
 };
 
+typedef struct		s_server_command
+{
+	char			*irc_cmd;
+	enum e_arg_type	arg1;
+	enum e_arg_type	arg2;
+	enum e_arg_type	arg3;
+	enum e_arg_type	arg4;
+}					t_server_command;
+
 typedef struct		s_client_command
 {
 	char			*client_cmd;
@@ -58,7 +67,7 @@ typedef struct		s_irc_command
 }					t_irc_command;
 
 extern const t_client_command g_client_commands[];
-extern const char *g_irc_commands[];
+extern const t_server_command g_server_command[];
 
 typedef struct		s_fd
 {
@@ -67,10 +76,14 @@ typedef struct		s_fd
 	void			(*fct_write)();
 	char			buf_read[BUF_SIZE + 1];
 	char			buf_write[BUF_SIZE + 1];
+	char			*hostname;
+	char			*nick;
+	char			*user;
 }					t_fd;
 
 typedef struct		s_env
 {
+	t_serv			*serv;
 	t_fd			*fds;
 	int				port;
 	int				maxfd;
@@ -115,6 +128,12 @@ char				*get_request(t_env_client *e, char *cmd);
 int					arg_with_colon(t_client_command cli_cmd);
 int					contain_irc_command(char *str);
 int					get_client_command_index(char *str);
+int					get_server_command_index(char *str);
 int					is_valid_command(t_client_command cli_cmd, char **split);
 
+void				add_user(t_env *e, char *nick, char *user, char *hostname);
+
+void				server_evalmsg(char *msg);
+
+void				add_user_to_list(t_user **users, t_user *user);
 #endif

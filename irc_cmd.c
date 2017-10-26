@@ -6,11 +6,20 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:37:45 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 14:29:53 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/26 16:06:03 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
+
+const t_server_command g_server_command[] = {
+	{"PRIVMSG", SINGLE, MULTI, NONE, NONE},
+	{"NICK", SINGLE, NONE, NONE, NONE},
+	{"JOIN", SINGLE, NONE, NONE, NONE},
+	{"PART", SINGLE, NONE, NONE, NONE},
+	{"USERS", NONE, NONE, NONE, NONE},
+	{"USER", SINGLE, SINGLE, SINGLE, MULTI}
+};
 
 const t_client_command g_client_commands[] = {
 	{"/msg", "PRIVMSG", SINGLE, MULTI, NONE, NONE, "/msg <nick> <message>"},
@@ -45,6 +54,20 @@ int		is_valid_command(t_client_command cli_cmd, char **split)
 	if ((cli_cmd.arg3 != NONE) && !split[3])
 		return (0);
 	return (1);
+}
+
+int	get_server_command_index(char *str)
+{
+	int i;
+
+	i = 0;
+	while (i < 6)
+	{
+		if (ft_strstr(str, g_client_commands[i].client_cmd))
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 int	get_client_command_index(char *str)

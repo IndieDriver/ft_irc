@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:51 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 10:20:19 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/26 16:09:29 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	read_from_client(t_env *e, int cs)
 
 	r = recv(cs, e->fds[cs].buf_read, BUF_SIZE, 0);
 	printf("message received: %s", e->fds[cs].buf_read);
+	//server_evalmsg(e->fds[cs].buf_read);
 	if (r <= 0)
 	{
 		close(cs);

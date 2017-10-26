@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/25 11:47:53 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/26 18:09:00 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void		init_env(t_env *e)
 		clean_fd(&e->fds[i]);
 		i++;
 	}
+	e->serv = (t_serv*)malloc(sizeof(t_serv*));
+	e->serv->channels = NULL;
+	e->serv->users = NULL;
 }
 
 void		get_opt(t_env *e, int ac, char **av)

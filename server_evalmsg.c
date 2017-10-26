@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_fd.c                                         :+:      :+:    :+:   */
+/*   server_evalmsg.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/25 11:22:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 15:55:07 by amathias         ###   ########.fr       */
+/*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
+/*   Updated: 2017/10/26 16:08:39 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stdio.h>
 #include "bircd.h"
 
-void	clean_fd(t_fd *fd)
+void	server_evalmsg(char *msg)
 {
-	fd->type = FD_FREE;
-	fd->fct_read = NULL;
-	fd->fct_write = NULL;
-	fd->hostname = NULL;
-	fd->nick = NULL;
-	fd->user = NULL;
+	char **split;
+
+	split = ft_strsplit(msg, ' ');
+	if (split != NULL)
+	{
+
+	}
 }
