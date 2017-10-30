@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 12:05:14 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 14:55:01 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,4 +131,8 @@ int					is_valid_command(t_client_command cli_cmd, char **split);
 void				server_evalmsg(char *msg);
 void				clear_server(t_env *e);
 void				print_serv(t_env *e);
+
+t_user				*prefix_to_user(char *prefix);
+char				*user_to_prefix(t_user *user);
+
 #endif

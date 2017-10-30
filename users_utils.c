@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 18:10:37 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 12:08:44 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 14:35:57 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,12 @@ void	print_userlist(t_user *begin)
 			list = list->next;
 		}
 	}
+}
+
+void	free_user(t_user *user)
+{
+	free(user->nick);
+	free(user->user);
+	free(user->hostname);
+	free(user);
 }

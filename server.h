@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:49:38 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 12:40:06 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 14:36:18 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_user				*get_user(t_serv *serv, char *nick);
 t_user				*new_user(char *nick, char *username, char *hostname);
 void				clear_userlist(t_user **users);
 void				print_userlist(t_user *begin);
+void				free_user(t_user *user);
 
 void				add_channel(t_chan **channels, char *name);
 void				remove_channel(t_chan **channels, char *name);
