@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 15:17:22 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 18:24:40 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,6 @@ typedef struct		s_client_command
 	char			*usage;
 }					t_client_command;
 
-typedef struct		s_irc_command
-{
-	char			*irc_cmd;
-	enum e_arg_type	arg1;
-	enum e_arg_type	arg2;
-	enum e_arg_type	arg3;
-	enum e_arg_type	arg4;
-}					t_irc_command;
-
 extern const t_client_command g_client_commands[];
 extern const t_server_command g_server_commands[];
 
@@ -89,6 +80,7 @@ typedef struct		s_env
 	int				r;
 	fd_set			fd_read;
 	fd_set			fd_write;
+	char			*hostname;
 }					t_env;
 
 typedef struct		s_env_client
@@ -132,11 +124,17 @@ int					is_valid_client_command(t_client_command cli_cmd,
 int					is_valid_server_command(t_server_command cli_cmd,
 						char **split);
 
-void				server_evalmsg(t_env *e, char *msg);
+char				*server_evalmsg(t_env *e, t_fd *fd);
 void				clear_server(t_env *e);
 void				print_serv(t_env *e);
 
 t_user				*prefix_to_user(char *prefix);
 char				*user_to_prefix(t_user *user);
+
+
+char				*rpl_welcome(t_env *e, t_user *user);
+char				*rpl_nickinuse(t_env *e, t_user *user);
+
+void				broadcast_msg_server(t_env *e, char *msg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:23 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 16:52:32 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 17:12:19 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void			srv_accept(t_env *e, int s)
 	e->fds[cs].type = FD_CLIENT;
 	e->fds[cs].fct_read = read_from_client;
 	e->fds[cs].fct_write = write_to_client;
-	//e->fds[cs].hostname = inet_ntoa(csin.sin_addr);
+	e->fds[cs].hostname = inet_ntoa(csin.sin_addr);
 }

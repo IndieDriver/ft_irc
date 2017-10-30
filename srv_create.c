@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:19:59 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/25 11:46:17 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 18:35:38 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include <stdio.h>
+#include <arpa/inet.h>
 #include "bircd.h"
 
 void	srv_create(t_env *e, int port)
@@ -27,9 +28,13 @@ void	srv_create(t_env *e, int port)
 	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr = INADDR_ANY;
 	sin.sin_port = htons(port);
+	int enable = 1;
+	if (setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0)
+		ft_putendl_fd("setsockopt(SO_REUSEADDR) failed", 2);
 	X(-1, bind(s, (struct sockaddr*)&sin, sizeof(sin)), "bind");
 	X(-1, listen(s, 42), "listen");
 	e->fds[s].type = FD_SERV;
 	e->fds[s].fct_read = srv_accept;
+
 	printf("server started on port %d\n", port);
 }

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:31:28 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 12:37:22 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 18:07:17 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,21 @@ void	print_channellist(t_chan *begin)
 			list = list->next;
 		}
 	}
+}
+
+int		is_user_in_channel(t_chan *chan, char *nick)
+{
+	t_user	*list;
+
+	list = chan->users;
+	if (list)
+	{
+		while (list)
+		{
+			if (ft_strcmp(list->nick, nick) == 0)
+				return (1);
+			list = list->next;
+		}
+	}
+	return (0);
 }
