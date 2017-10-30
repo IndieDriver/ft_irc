@@ -6,13 +6,13 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:37:45 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 16:06:03 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 15:20:35 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
 
-const t_server_command g_server_command[] = {
+const t_server_command g_server_commands[] = {
 	{"PRIVMSG", SINGLE, MULTI, NONE, NONE},
 	{"NICK", SINGLE, NONE, NONE, NONE},
 	{"JOIN", SINGLE, NONE, NONE, NONE},
@@ -45,13 +45,28 @@ int		arg_with_colon(t_client_command cli_cmd)
 	return (0);
 }
 
-int		is_valid_command(t_client_command cli_cmd, char **split)
+int		is_valid_client_command(t_client_command cli_cmd, char **split)
 {
 	if ((cli_cmd.arg1 != NONE) && !split[1])
 		return (0);
 	if ((cli_cmd.arg2 != NONE) && !split[2])
 		return (0);
 	if ((cli_cmd.arg3 != NONE) && !split[3])
+		return (0);
+	if ((cli_cmd.arg4 != NONE) && !split[4])
+		return (0);
+	return (1);
+}
+
+int		is_valid_server_command(t_server_command cli_cmd, char **split)
+{
+	if ((cli_cmd.arg1 != NONE) && !split[1])
+		return (0);
+	if ((cli_cmd.arg2 != NONE) && !split[2])
+		return (0);
+	if ((cli_cmd.arg3 != NONE) && !split[3])
+		return (0);
+	if ((cli_cmd.arg4 != NONE) && !split[4])
 		return (0);
 	return (1);
 }
@@ -63,7 +78,7 @@ int	get_server_command_index(char *str)
 	i = 0;
 	while (i < 6)
 	{
-		if (ft_strstr(str, g_client_commands[i].client_cmd))
+		if (ft_strstr(str, g_server_commands[i].irc_cmd))
 			return (i);
 		i++;
 	}

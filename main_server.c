@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 14:26:53 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 14:57:44 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int			main(int ac, char **av)
 	t_env	e;
 
 	init_env(&e);
-	server_evalmsg(""); //to remove
 	get_opt(&e, ac, av);
 	srv_create(&e, e.port);
 	main_loop(&e);

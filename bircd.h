@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 14:55:01 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 15:17:22 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ typedef struct		s_irc_command
 	enum e_arg_type	arg1;
 	enum e_arg_type	arg2;
 	enum e_arg_type	arg3;
+	enum e_arg_type	arg4;
 }					t_irc_command;
 
 extern const t_client_command g_client_commands[];
-extern const t_server_command g_server_command[];
+extern const t_server_command g_server_commands[];
 
 typedef struct		s_fd
 {
@@ -126,9 +127,12 @@ int					arg_with_colon(t_client_command cli_cmd);
 int					contain_irc_command(char *str);
 int					get_client_command_index(char *str);
 int					get_server_command_index(char *str);
-int					is_valid_command(t_client_command cli_cmd, char **split);
+int					is_valid_client_command(t_client_command cli_cmd,
+						char **split);
+int					is_valid_server_command(t_server_command cli_cmd,
+						char **split);
 
-void				server_evalmsg(char *msg);
+void				server_evalmsg(t_env *e, char *msg);
 void				clear_server(t_env *e);
 void				print_serv(t_env *e);
 

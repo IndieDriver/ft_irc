@@ -6,22 +6,18 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/10/30 14:55:36 by amathias         ###   ########.fr        #
+#    Updated: 2017/10/30 15:28:17 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCSERVER =	main_server.c		\
+			server_io.c			\
 			x.c					\
 			main_loop.c			\
 			init_fd.c			\
 			do_select.c			\
-			check_fd.c			\
 			srv_create.c		\
 			srv_accept.c		\
-			client_read.c		\
-			client_write.c		\
-			cli_evalcmd.c		\
-			cli_create.c		\
 			irc_cmd.c			\
 			server.c			\
 			channel.c			\
@@ -32,13 +28,9 @@ SRCSERVER =	main_server.c		\
 			prefix.c			\
 
 SRCCLIENT =	main_client.c		\
+			client_io.c			\
 			x.c					\
 			cli_create.c		\
-			client_read.c		\
-			client_write.c		\
-			srv_accept.c		\
-			main_loop.c			\
-			check_fd.c			\
 			init_fd.c			\
 			do_select.c			\
 			cli_evalcmd.c		\

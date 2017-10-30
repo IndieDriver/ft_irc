@@ -1,40 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_fd.c                                         :+:      :+:    :+:   */
+/*   server_io.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/25 11:23:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 14:15:31 by amathias         ###   ########.fr       */
+/*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
+/*   Updated: 2017/10/30 15:26:22 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/socket.h>
 #include "bircd.h"
 
-void	check_fd_client(t_env_client *e)
+void	read_from_client(t_env *e, int cs)
 {
-	char *cmd;
+	t_user *user;
+	int	r;
+	int	i;
 
-	if (FD_ISSET(STDIN_FILENO, &e->fd_read))
+	r = recv(cs, e->fds[cs].buf_read, BUF_SIZE, 0);
+	printf("message received: %s", e->fds[cs].buf_read);
+	user = get_user(e->serv, e->fds[cs].nick);
+	printf("user: %s\n", user->nick);
+	server_evalmsg(e, e->fds[cs].buf_read);
+	if (r <= 0)
 	{
-		fgets(e->stdin_fd->buf_write, BUF_SIZE, stdin);
-		if (strstr(e->stdin_fd->buf_write, "\n"))
+		close(cs);
+		clean_fd(&e->fds[cs]);
+		printf("client #%d gone away\n", cs);
+	}
+	else
+	{
+		i = 0;
+		while (i < e->maxfd)
 		{
-			e->stdin_fd->buf_write[BUF_SIZE] = '\0';
-		}
-		cmd = get_request(e, e->stdin_fd->buf_write);
-		if (e->connected && cmd)
-		{
-			e->server_fd->fct_write(e, cmd);
-			free(cmd);
+			if ((e->fds[i].type == FD_CLIENT) && (i != cs))
+				send(i, e->fds[cs].buf_read, r, 0);
+			i++;
 		}
 	}
-	else if (e->connected && FD_ISSET(e->server_soc, &e->fd_read))
-	{
-		e->server_fd->fct_read(e);
-	}
+}
+
+void	write_to_client(t_env *e, int cs)
+{
+	X(-1, send(cs, e->fds[cs].buf_write, BUF_SIZE, 0), "send");
 }
 
 void	check_fd_server(t_env *e)

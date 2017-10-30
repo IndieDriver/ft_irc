@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 14:54:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 14:54:24 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 14:57:52 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ t_user	*parse_user_prefix(t_user *user,
 			((hostname - 1) - username));
 	ft_strncpy(user->hostname, hostname + 1,
 			(((prefix + ft_strlen(prefix) - 1)) - hostname));
-
-	printf("%s|%s|%s\n", user->nick, user->user, user->hostname);
-
 	return (user);
 }
 

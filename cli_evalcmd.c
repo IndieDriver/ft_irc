@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 14:35:54 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 15:18:25 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*handle_client_command(t_env_client *e, char **split)
 			return (NULL);
 		}
 		client_cmd = g_client_commands[command_index];
-		if (is_valid_command(client_cmd, split))
+		if (is_valid_client_command(client_cmd, split))
 			tmp = get_command_msg(client_cmd, split);
 		else
 			ft_putendl_fd(client_cmd.usage, 2);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client_read.c                                      :+:      :+:    :+:   */
+/*   client_io.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/25 11:24:51 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 16:09:29 by amathias         ###   ########.fr       */
+/*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
+/*   Updated: 2017/10/30 15:26:43 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,31 @@ void	read_from_server(t_env_client *e)
 	}
 }
 
-void	read_from_client(t_env *e, int cs)
+void	write_to_server(t_env_client *e, char *buffer)
 {
-	int	r;
-	int	i;
+	X(-1, send(e->server_soc, buffer, BUF_SIZE, 0), "send");
+}
 
-	r = recv(cs, e->fds[cs].buf_read, BUF_SIZE, 0);
-	printf("message received: %s", e->fds[cs].buf_read);
-	//server_evalmsg(e->fds[cs].buf_read);
-	if (r <= 0)
+void	check_fd_client(t_env_client *e)
+{
+	char *cmd;
+
+	if (FD_ISSET(STDIN_FILENO, &e->fd_read))
 	{
-		close(cs);
-		clean_fd(&e->fds[cs]);
-		printf("client #%d gone away\n", cs);
-	}
-	else
-	{
-		i = 0;
-		while (i < e->maxfd)
+		fgets(e->stdin_fd->buf_write, BUF_SIZE, stdin);
+		if (strstr(e->stdin_fd->buf_write, "\n"))
 		{
-			if ((e->fds[i].type == FD_CLIENT) && (i != cs))
-				send(i, e->fds[cs].buf_read, r, 0);
-			i++;
+			e->stdin_fd->buf_write[BUF_SIZE] = '\0';
 		}
+		cmd = get_request(e, e->stdin_fd->buf_write);
+		if (e->connected && cmd)
+		{
+			e->server_fd->fct_write(e, cmd);
+			free(cmd);
+		}
+	}
+	else if (e->connected && FD_ISSET(e->server_soc, &e->fd_read))
+	{
+		e->server_fd->fct_read(e);
 	}
 }
