@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:57:11 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 11:57:30 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 12:41:51 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ void	add_user(t_serv *serv, char *nick, char *username, char *hostname)
 
 	if (is_nick_free(serv->users, nick))
 	{
+		user = new_user(nick, username, hostname);
+		if (user != NULL)
+			add_user_to_list(&serv->users, user);
+	}
+	else
+	{
 		ft_putendl_fd("nick already in use", 2);
 		//TODO: send rep nick in use
-	}
-	user = new_user(nick, username, hostname);
-	if (user != NULL)
-	{
-		add_user_to_list(&serv->users, user);
 	}
 }
 
@@ -49,7 +50,7 @@ void	remove_user(t_serv *serv, char *nick)
 	t_chan *tmp_chan;
 	t_user *user;
 
-	user = get_user(serv->users, nick);
+	user = get_user(serv, nick);
 	if (user == NULL)
 	{
 		ft_putstr_fd("No user named ", 2);
@@ -59,7 +60,7 @@ void	remove_user(t_serv *serv, char *nick)
 	tmp_chan = serv->channels;
 	while (tmp_chan)
 	{
-		delete_user_from_channel(serv->channels, user, tmp_chan->name);
+		remove_user_from_channel(serv->channels, user, tmp_chan->name);
 		tmp_chan = tmp_chan->next;
 	}
 	remove_user_from_list(&serv->users, user->nick);
@@ -70,4 +71,10 @@ void	clear_server(t_env *e)
 	clear_userlist(&e->serv->users);
 	clear_channellist(&e->serv->channels);
 	free(&e->serv);
+}
+
+void	print_serv(t_env *e)
+{
+	print_channellist(e->serv->channels);
+	print_userlist(e->serv->users);
 }

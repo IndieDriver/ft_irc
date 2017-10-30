@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 18:09:00 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 12:44:18 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int			main(int ac, char **av)
 	get_opt(&e, ac, av);
 	srv_create(&e, e.port);
 	main_loop(&e);
+	clear_server(&e);
 	return (0);
 }
