@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 18:08:44 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/30 11:56:29 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@
 
 enum				e_arg_type
 {
-					NONE = 0,
-					SINGLE = 1,
-					OPTIONAL = 2,
-					MULTI = 3
+	NONE = 0, SINGLE = 1, OPTIONAL = 2, MULTI = 3
 };
 
 typedef struct		s_server_command
@@ -131,9 +128,6 @@ int					get_client_command_index(char *str);
 int					get_server_command_index(char *str);
 int					is_valid_command(t_client_command cli_cmd, char **split);
 
-void				add_user(t_env *e, char *nick, char *user, char *hostname);
-
 void				server_evalmsg(char *msg);
-
-void				add_user_to_list(t_user **users, t_user *user);
+void				clear_server(t_env *e);
 #endif

@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   users_utils.c                                      :+:      :+:    :+:   */
+/*   channel_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/26 18:10:37 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 11:24:25 by amathias         ###   ########.fr       */
+/*   Created: 2017/10/30 11:31:28 by amathias          #+#    #+#             */
+/*   Updated: 2017/10/30 11:31:48 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
 
-void	clear_userlist(t_user **users)
+void		clear_channellist(t_chan **channels)
 {
-	t_user *current;
-	t_user *next;
+	t_chan	*current;
+	t_chan	*next;
 
-	current = *users;
+	current = *channels;
 	while (current)
 	{
 		next = current->next;
+		clear_userlist(&current->users);
 		free(current);
 		current = next;
 	}
-	*users = NULL;
+	*channels = NULL;
 }

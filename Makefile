@@ -6,7 +6,7 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/10/26 17:04:21 by amathias         ###   ########.fr        #
+#    Updated: 2017/10/30 11:33:38 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,10 @@ SRCSERVER =	main_server.c		\
 			cli_create.c		\
 			irc_cmd.c			\
 			server.c			\
+			channel.c			\
+			channel_utils.c		\
+			users.c				\
+			users_utils.c		\
 			server_evalmsg.c	\
 
 SRCCLIENT =	main_client.c		\
