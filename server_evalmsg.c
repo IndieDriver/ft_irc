@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 16:52:31 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:25:51 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,13 @@
 char 	*server_cmd_user(t_env *e, t_fd *fd, t_server_command server_cmd,
 			char **split)
 {
-	t_user user;
-
-	fd->user = ft_strdup(split[1]);
-	user.nick = fd->nick;
-	user.hostname = fd->hostname;
-	user.user = fd->user;
+	fd->user.user = ft_strdup(split[1]);
 	(void)server_cmd;
-	if (user.nick != NULL && is_nick_free(e->serv->users, user.nick))
+	if (fd->user.nick != NULL && is_nick_free(e->serv->users, fd->user.nick))
 	{
-		add_user(e->serv, user.nick, user.user, user.hostname);
+		add_user(e->serv, copy_user(&fd->user));
 		fd->has_login = 1;
-		return (rpl_welcome(e, &user));
+		return (rpl_welcome(e, fd, &fd->user));
 	}
 	return (NULL);
 }
@@ -35,26 +30,21 @@ char 	*server_cmd_user(t_env *e, t_fd *fd, t_server_command server_cmd,
 char 	*server_cmd_nick(t_env *e, t_fd *fd, t_server_command server_cmd,
 			char **split)
 {
-	t_user user;
-
-	fd->nick = ft_strdup(split[1]);
-	user.nick = fd->nick;
-	user.hostname = fd->hostname;
-	user.user = fd->user;
 	(void)server_cmd;
+	fd->user.nick = ft_strdup(split[1]);
 	if (is_nick_free(e->serv->users, split[1]))
 	{
-		if (user.user != NULL)
+		if (fd->user.user != NULL)
 		{
-			add_user(e->serv, user.nick, user.user, user.hostname);
+			add_user(e->serv, copy_user(&fd->user));
 			fd->has_login = 1;
-			return (rpl_welcome(e, &user));
+			return (rpl_welcome(e, fd, &fd->user));
 		}
 		else
 			return (NULL);
 	}
 	else
-		return (rpl_nickinuse(e, &user));
+		return (rpl_nickinuse(e, fd, &fd->user));
 	return (NULL);
 }
 

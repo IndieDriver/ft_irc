@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 16:25:28 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:11:25 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ void		clean_fd(t_fd *fd)
 	fd->type = FD_FREE;
 	fd->fct_read = NULL;
 	fd->fct_write = NULL;
-	if (fd->nick != NULL)
-		free(fd->nick);
-	if (fd->hostname != NULL)
-		free(fd->hostname);
-	if (fd->user != NULL)
-		free(fd->user);
-	fd->hostname = NULL;
-	fd->nick = NULL;
-	fd->user = NULL;
+	if (fd->user.nick != NULL)
+		free(fd->user.nick);
+	if (fd->user.hostname != NULL)
+		free(fd->user.hostname);
+	if (fd->user.user != NULL)
+		free(fd->user.user);
+	fd->user.hostname = NULL;
+	fd->user.nick = NULL;
+	fd->user.user = NULL;
+	fd->user.socket = -1;
 	fd->has_login = 0;
 }
 

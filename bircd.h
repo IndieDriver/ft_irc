@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 16:52:36 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:22:19 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ typedef struct		s_fd
 	void			(*fct_write)();
 	char			buf_read[BUF_SIZE + 1];
 	char			buf_write[BUF_SIZE + 1];
-	char			*hostname;
-	char			*nick;
-	char			*user;
+	t_user			user;
 	int				has_login;
 }					t_fd;
 
@@ -140,8 +138,8 @@ t_user				*prefix_to_user(char *prefix);
 char				*user_to_prefix(t_user *user);
 
 
-char				*rpl_welcome(t_env *e, t_user *user);
-char				*rpl_nickinuse(t_env *e, t_user *user);
+char				*rpl_welcome(t_env *e, t_fd *fd, t_user *user);
+char				*rpl_nickinuse(t_env *e, t_fd *fd, t_user *user);
 
 void				broadcast_msg_channel(t_env *e, t_chan *chan, char *msg);
 void				broadcast_msg_users_channel(t_env *e, char *nick, char *msg);

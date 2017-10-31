@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 17:26:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 12:42:34 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:05:02 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ void		add_user_to_channel(t_chan **channels, t_user *user,
 		add_channel(channels, chan_name);
 		chan = get_chan(*channels, chan_name);
 	}
-	add_user_to_list(&chan->users, new_user(user->nick, user->user,
-				user->hostname));
+	add_user_to_list(&chan->users, copy_user(user));
 }
 
 void		remove_user_from_channel(t_chan *channels, t_user *user,

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 17:46:00 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 12:23:50 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:04:13 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_user	*get_user(t_serv *serv, char *nick)
 	return (NULL);
 }
 
-t_user	*new_user(char *nick, char *username, char *hostname)
+t_user	*new_user(char *nick, char *username, char *hostname, int socket)
 {
 	t_user *user;
 
@@ -70,6 +70,20 @@ t_user	*new_user(char *nick, char *username, char *hostname)
 	user->nick = nick;
 	user->user = username;
 	user->hostname = hostname;
+	user->socket = socket;
 	user->next = NULL;
 	return (user);
+}
+t_user	*copy_user(t_user *user)
+{
+	t_user *newuser;
+
+	if ((newuser = malloc(sizeof(t_user))) == NULL)
+		return (NULL);
+	newuser->nick = user->nick;
+	newuser->user = user->user;
+	newuser->hostname = user->hostname;
+	newuser->socket = user->socket;
+	newuser->next = NULL;
+	return (newuser);
 }

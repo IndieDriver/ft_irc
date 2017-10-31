@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:57:11 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 12:41:51 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:01:15 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,13 @@ int		is_nick_free(t_user *users, char *nick)
 	return (1);
 }
 
-void	add_user(t_serv *serv, char *nick, char *username, char *hostname)
+void	add_user(t_serv *serv, t_user *user)
 {
-	t_user *user;
-
-	if (is_nick_free(serv->users, nick))
+	if (user == NULL)
+		return ;
+	if (is_nick_free(serv->users, user->nick))
 	{
-		user = new_user(nick, username, hostname);
-		if (user != NULL)
-			add_user_to_list(&serv->users, user);
+		add_user_to_list(&serv->users, user);
 	}
 	else
 	{

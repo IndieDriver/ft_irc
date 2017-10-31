@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:56:55 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 16:50:03 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:22:39 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <sys/socket.h>
 #include "bircd.h"
 
-char	*rpl_welcome(t_env *e, t_user *user)
+char	*rpl_welcome(t_env *e, t_fd *fd, t_user *user)
 {
 	//:bar.example.com 001 amy :Welcome to the Internet Relay Network borja!borja@polaris.cs.uchicago.edu
 	char *rpl;
@@ -34,16 +34,16 @@ char	*rpl_welcome(t_env *e, t_user *user)
 	ft_strncat(rpl, fci, 510);
 	free(fci);
 	ft_strncat(rpl, "\r\n", 512);
-	write_msg_to_client(rpl, get_client_fd(e, user->nick));
+	write_msg_to_client(rpl, fd->user.socket);
 	free(rpl);
 	return (NULL);
 }
 
-char	*rpl_nickinuse(t_env *e, t_user *user)
+char	*rpl_nickinuse(t_env *e, t_fd *fd, t_user *user)
 {
-	int i;
 	char *rpl;
 
+	(void)e;
 	if (!(rpl = malloc(sizeof(char) * 510)))
 		return (NULL);
 	rpl[0] = '\0';
@@ -53,15 +53,7 @@ char	*rpl_nickinuse(t_env *e, t_user *user)
 	ft_strncat(rpl, user->nick, 510);
 	ft_strncat(rpl, " :Nickname is already in use", 510);
 	ft_strncat(rpl, "\r\n", 512);
-	i = 0;
-	while (i < e->maxfd)
-	{
-		if (e->fds[i].type == FD_CLIENT && !e->fds[i].has_login
-			&& e->fds[i].nick && ft_strcmp(e->fds[i].nick, user->nick) == 0)
-			break;
-		i++;
-	}
-	write_msg_to_client(rpl, i);
+	write_msg_to_client(rpl, fd->user.socket);
 	free(rpl);
 	return (NULL);
 }
