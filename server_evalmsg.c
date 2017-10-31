@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:25:51 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 18:11:03 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,41 @@ char 	*server_cmd_nick(t_env *e, t_fd *fd, t_server_command server_cmd,
 	return (NULL);
 }
 
-char	*handle_command_msg(t_env *e, t_fd *fd, t_server_command server_cmd,
+char 	*server_cmd_privmsg(t_env *e, t_fd *fd, char *msg)
+{
+	char *rpl;
+	char *fci;
+
+	(void)e;
+	if (!(rpl = malloc(sizeof(char) * 510)))
+		return (NULL);
+	rpl[0] = '\0';
+	fci = user_to_prefix(&fd->user);
+	ft_strncat(rpl, fci, 510);
+	free (fci);
+	ft_strncat(rpl, " ", 510);
+	ft_strncat(rpl, msg, 510);
+	broadcast_msg_server(e, rpl);
+	free (rpl);
+	return (NULL);
+}
+
+char	*handle_command_split(t_env *e, t_fd *fd, t_server_command server_cmd,
 			char **split)
 {
-	(void)fd;
-	(void)split;
 	if (ft_strcmp(server_cmd.irc_cmd, "NICK") == 0)
 		return (server_cmd_nick(e, fd, server_cmd, split));
 	else if (ft_strcmp(server_cmd.irc_cmd, "USER") == 0)
 		return (server_cmd_user(e, fd, server_cmd, split));
+	return (NULL);
+}
+
+char	*handle_command_chaining(t_env *e, t_fd *fd,
+			t_server_command server_cmd, char *msg)
+{
+	//For Every command that just need chaining
+	if (ft_strcmp(server_cmd.irc_cmd, "PRIVMSG") == 0)
+		return (server_cmd_privmsg(e, fd, msg));
 
 	return (NULL);
 }
@@ -78,7 +104,11 @@ char	*handle_server_command(t_env *e, t_fd *fd, char *msg, char **split)
 	}
 	server_cmd = g_server_commands[command_index];
 	if (is_valid_server_command(server_cmd, split))
-		tmp = handle_command_msg(e, fd, server_cmd, split);
+	{
+		tmp = handle_command_split(e, fd, server_cmd, split);
+		if (tmp == NULL)
+			tmp = handle_command_chaining(e, fd, server_cmd, msg);
+	}
 	else
 		ft_putendl_fd("Invalid usage", 2);
 	return (tmp);

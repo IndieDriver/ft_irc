@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:22:19 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:31:57 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void				srv_accept(t_env *e, int s);
 void				write_to_client(t_env *e, int clientsocket);
 void				write_msg_to_client(char *msg, int cs);
 void				write_to_server(t_env_client *e, char *buffer);
+void				write_msg_to_server(char *msg, int cs);
 int					get_client_fd(t_env *e, char *nick);
 
 void				read_from_client(t_env *e, int clientsocket);

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:27:11 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:51:52 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ void	read_from_client(t_env *e, int cs)
 	}
 	else
 	{
-		printf("bytes received: %d\n", r);
 		printf("[%d] message received: %s", cs, e->fds[cs].buf_read);
 		response = server_evalmsg(e, &e->fds[cs]);
 		if (response != NULL)
 		{
 			printf("response: %s", response);
-			//broadcast_msg_server(e, response);
 			free(response);
 		}
 	}

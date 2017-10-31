@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 16:15:53 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:45:08 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	read_from_server(t_env_client *e)
 	int		r;
 
 	response = NULL;
-	//ft_bzero(e->server_fd->buf_read, BUF_SIZE);
 	ft_bzero(e->server_fd.buf_read, BUF_SIZE);
 	r = recv(e->server_soc, e->server_fd.buf_read, BUF_SIZE, 0);
 	if (r <= 0)
@@ -47,6 +46,11 @@ void	read_from_server(t_env_client *e)
 void	write_to_server(t_env_client *e, char *buffer)
 {
 	X(-1, send(e->server_soc, buffer, BUF_SIZE, 0), "send");
+}
+
+void	write_msg_to_server(char *msg, int cs)
+{
+	X(-1, send(cs, msg, BUF_SIZE, 0), "send");
 }
 
 void	check_fd_client(t_env_client *e)
