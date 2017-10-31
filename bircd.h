@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 11:32:51 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:14:02 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ typedef struct		s_env
 
 typedef struct		s_env_client
 {
-	t_fd			*stdin_fd;
-	t_fd			*server_fd;
+	t_fd			stdin_fd;
+	t_fd			server_fd;
 	int				server_soc;
 	int				port;
 	int				max;
@@ -102,6 +102,7 @@ void				cli_create(t_env_client *e, const char *addr, int port);
 void				srv_accept(t_env *e, int s);
 
 void				write_to_client(t_env *e, int clientsocket);
+void				write_msg_to_client(char *msg, int cs);
 void				write_to_server(t_env_client *e, char *buffer);
 int					get_client_fd(t_env *e, char *nick);
 
@@ -131,6 +132,8 @@ int					is_valid_server_command(t_server_command cli_cmd,
 char				*server_evalmsg(t_env *e, t_fd *fd);
 void				clear_server(t_env *e);
 void				print_serv(t_env *e);
+
+char				*client_evalmsg(t_env_client *e, char *cmd);
 
 t_user				*prefix_to_user(char *prefix);
 char				*user_to_prefix(t_user *user);

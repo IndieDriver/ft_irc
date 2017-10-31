@@ -6,10 +6,13 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:56:55 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 17:39:53 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 14:28:05 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/socket.h>
 #include "bircd.h"
 
 char	*rpl_welcome(t_env *e, t_user *user)
@@ -31,7 +34,9 @@ char	*rpl_welcome(t_env *e, t_user *user)
 	ft_strncat(rpl, fci, 510);
 	free(fci);
 	ft_strncat(rpl, "\r\n", 512);
-	return (rpl);
+	write_msg_to_client(rpl, get_client_fd(e, user->nick));
+	free(rpl);
+	return (NULL);
 }
 
 char	*rpl_nickinuse(t_env *e, t_user *user)
@@ -48,5 +53,7 @@ char	*rpl_nickinuse(t_env *e, t_user *user)
 	ft_strncat(rpl, user->nick, 510);
 	ft_strncat(rpl, " :Nickname is already in use", 510);
 	ft_strncat(rpl, "\r\n", 512);
-	return (rpl);
+	write_msg_to_client(rpl, get_client_fd(e, user->nick));
+	free(rpl);
+	return (NULL);
 }

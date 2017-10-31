@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 12:03:59 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 14:23:59 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	read_from_client(t_env *e, int cs)
 		response = server_evalmsg(e, &e->fds[cs]);
 		if (response != NULL)
 		{
-			printf("response: %s\n", response);
-			broadcast_msg_server(e, response);
+			printf("response: %s", response);
+			//broadcast_msg_server(e, response);
 			free(response);
 		}
 	}
@@ -46,6 +46,12 @@ void	read_from_client(t_env *e, int cs)
 void	write_to_client(t_env *e, int cs)
 {
 	X(-1, send(cs, e->fds[cs].buf_write, BUF_SIZE, 0), "send");
+}
+
+void	write_msg_to_client(char *msg, int cs)
+{
+	if (cs != -1)
+		X(-1, send(cs, msg, BUF_SIZE, 0), "send");
 }
 
 void	check_fd_server(t_env *e)

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/26 15:14:59 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:16:37 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 void	init_client(t_env_client *e, int client_socket)
 {
 	e->server_soc = client_socket;
-	e->server_fd->type = FD_SERV;
-	e->server_fd->fct_read = read_from_server;
-	e->server_fd->fct_write = write_to_server;
-	e->stdin_fd->type = FD_SERV;
-	e->stdin_fd->fct_read = read_from_server;
-	e->stdin_fd->fct_write = write_to_server;
+	e->server_fd.type = FD_SERV;
+	e->server_fd.fct_read = read_from_server;
+	e->server_fd.fct_write = write_to_server;
+	e->stdin_fd.type = FD_SERV;
+	e->stdin_fd.fct_read = read_from_server;
+	e->stdin_fd.fct_write = write_to_server;
 	e->connected = 1;
 }
 
@@ -40,7 +40,7 @@ void	register_connection(t_env_client *e)
 	ft_strncat(request, "/nick ", 512);
 	ft_strncat(request, login, 512);
 	cmd = get_request(e, request);
-	e->server_fd->fct_write(e, cmd);
+	e->server_fd.fct_write(e, cmd);
 	free(cmd);
 
 	ft_bzero(request, 512);
@@ -49,7 +49,7 @@ void	register_connection(t_env_client *e)
 	ft_strncat(request, login, 512);
 	ft_strncat(request, " * * default user", 512);
 	cmd = get_request(e, request);
-	e->server_fd->fct_write(e, cmd);
+	e->server_fd.fct_write(e, cmd);
 	free(cmd);
 }
 

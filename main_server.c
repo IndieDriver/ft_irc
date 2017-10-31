@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 11:11:44 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 15:41:03 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@ void		clean_fd(t_fd *fd)
 	fd->type = FD_FREE;
 	fd->fct_read = NULL;
 	fd->fct_write = NULL;
-	fd->hostname = NULL;
 	if (fd->nick != NULL)
 		free(fd->nick);
-	fd->nick = NULL;
 	if (fd->hostname != NULL)
-		free(fd->nick);
-	fd->hostname = NULL;
+		free(fd->hostname);
 	if (fd->user != NULL)
 		free(fd->user);
+	fd->hostname = NULL;
+	fd->nick = NULL;
 	fd->user = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 10:50:42 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 14:49:25 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ void	init_fd_client(t_env_client *e)
 	FD_ZERO(&e->fd_read);
 	//FD_ZERO(&e->fd_write); TODO: test this
 	FD_SET(STDIN_FILENO, &e->fd_read);
-	FD_SET(e->server_soc, &e->fd_read);
-	e->max = MAX(e->max, e->server_soc);
+	if (e->connected)
+	{
+		FD_SET(e->server_soc, &e->fd_read);
+		e->max = MAX(e->max, e->server_soc);
+	}
 }
 
 void	init_fd(t_env *e)
