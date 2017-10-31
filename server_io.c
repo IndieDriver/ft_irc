@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 14:23:59 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:45:17 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	read_from_client(t_env *e, int cs)
 	r = recv(cs, e->fds[cs].buf_read, BUF_SIZE, 0);
 	if (r <= 0)
 	{
-		remove_user(e->serv, e->fds[cs].nick);
+		if (e->fds[cs].has_login)
+			remove_user(e->serv, e->fds[cs].nick);
 		close(cs);
 		clean_fd(&e->fds[cs]);
 		printf("client #%d gone away\n", cs);
@@ -50,6 +51,7 @@ void	write_to_client(t_env *e, int cs)
 
 void	write_msg_to_client(char *msg, int cs)
 {
+	printf("cs: %d\n", cs);
 	if (cs != -1)
 		X(-1, send(cs, msg, BUF_SIZE, 0), "send");
 }

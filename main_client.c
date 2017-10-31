@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:14 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 16:14:44 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:26:18 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,33 @@ void	clean_fd(t_fd *fd)
 	fd->type = FD_FREE;
 	fd->fct_read = NULL;
 	fd->fct_write = NULL;
-	/*
 	if (fd->nick != NULL)
 		free(fd->nick);
 	if (fd->hostname != NULL)
 		free(fd->hostname);
 	if (fd->user != NULL)
-		free(fd->user); */
+		free(fd->user);
 	fd->hostname = NULL;
 	fd->nick = NULL;
 	fd->user = NULL;
+	fd->has_login = 0;
 }
 
 void	init_fds(t_fd *fd)
 {
 	fd->type = FD_FREE;
-	//fd->fct_read = NULL;
-	//fd->fct_write = NULL;
+	fd->fct_read = NULL;
+	fd->fct_write = NULL;
 	fd->hostname = NULL;
 	fd->nick = NULL;
 	fd->hostname = NULL;
 	fd->user = NULL;
+	fd->has_login = 0;
 }
 
 void	init_env_client(t_env_client *e)
 {
 	e->connected = 0;
-	//e->stdin_fd = (t_fd*)Xv(NULL, malloc(sizeof(t_fd*)), "malloc");
-	//e->server_fd = (t_fd*)Xv(NULL, malloc(sizeof(t_fd*)), "malloc");
 	init_fds(&e->stdin_fd);
 	init_fds(&e->server_fd);
 	e->running = 1;

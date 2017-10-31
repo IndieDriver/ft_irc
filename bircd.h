@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 16:14:02 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:52:36 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct		s_fd
 	char			*hostname;
 	char			*nick;
 	char			*user;
+	int				has_login;
 }					t_fd;
 
 typedef struct		s_env

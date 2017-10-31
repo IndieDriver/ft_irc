@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 14:25:46 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:52:31 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ char 	*server_cmd_user(t_env *e, t_fd *fd, t_server_command server_cmd,
 	user.hostname = fd->hostname;
 	user.user = fd->user;
 	(void)server_cmd;
-	if (user.nick != NULL)
+	if (user.nick != NULL && is_nick_free(e->serv->users, user.nick))
 	{
 		add_user(e->serv, user.nick, user.user, user.hostname);
+		fd->has_login = 1;
 		return (rpl_welcome(e, &user));
 	}
 	return (NULL);
@@ -46,6 +47,7 @@ char 	*server_cmd_nick(t_env *e, t_fd *fd, t_server_command server_cmd,
 		if (user.user != NULL)
 		{
 			add_user(e->serv, user.nick, user.user, user.hostname);
+			fd->has_login = 1;
 			return (rpl_welcome(e, &user));
 		}
 		else

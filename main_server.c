@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 15:41:03 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:25:28 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		clean_fd(t_fd *fd)
 	fd->hostname = NULL;
 	fd->nick = NULL;
 	fd->user = NULL;
+	fd->has_login = 0;
 }
 
 void		init_env(t_env *e)
