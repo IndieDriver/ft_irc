@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 18:24:40 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 11:32:51 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,18 @@ typedef struct		s_env_client
 	int				r;
 	int				connected;
 	fd_set			fd_read;
+	int				running;
 }					t_env_client;
 
 void				main_loop(t_env *e);
 void				srv_create(t_env *e, int port);
 void				cli_create(t_env_client *e, const char *addr, int port);
 void				srv_accept(t_env *e, int s);
+
 void				write_to_client(t_env *e, int clientsocket);
 void				write_to_server(t_env_client *e, char *buffer);
+int					get_client_fd(t_env *e, char *nick);
+
 void				read_from_client(t_env *e, int clientsocket);
 void				read_from_server(t_env_client *e);
 void				clean_fd(t_fd *fd);
@@ -135,6 +139,8 @@ char				*user_to_prefix(t_user *user);
 char				*rpl_welcome(t_env *e, t_user *user);
 char				*rpl_nickinuse(t_env *e, t_user *user);
 
+void				broadcast_msg_channel(t_env *e, t_chan *chan, char *msg);
+void				broadcast_msg_users_channel(t_env *e, char *nick, char *msg);
 void				broadcast_msg_server(t_env *e, char *msg);
 
 #endif

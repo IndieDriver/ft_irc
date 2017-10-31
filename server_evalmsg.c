@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 18:04:35 by amathias         ###   ########.fr       */
+/*   Updated: 2017/10/31 11:18:12 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ char 	*server_cmd_user(t_env *e, t_fd *fd, t_server_command server_cmd,
 	user.user = fd->user;
 	(void)server_cmd;
 	if (user.nick != NULL)
+	{
+		add_user(e->serv, user.nick, user.user, user.hostname);
 		return (rpl_welcome(e, &user));
+	}
 	return (NULL);
 }
 
@@ -41,7 +44,10 @@ char 	*server_cmd_nick(t_env *e, t_fd *fd, t_server_command server_cmd,
 	if (is_nick_free(e->serv->users, split[1]))
 	{
 		if (user.user != NULL)
+		{
+			add_user(e->serv, user.nick, user.user, user.hostname);
 			return (rpl_welcome(e, &user));
+		}
 		else
 			return (NULL);
 	}
@@ -57,7 +63,7 @@ char	*handle_command_msg(t_env *e, t_fd *fd, t_server_command server_cmd,
 	(void)split;
 	if (ft_strcmp(server_cmd.irc_cmd, "NICK") == 0)
 		return (server_cmd_nick(e, fd, server_cmd, split));
-	if (ft_strcmp(server_cmd.irc_cmd, "USER") == 0)
+	else if (ft_strcmp(server_cmd.irc_cmd, "USER") == 0)
 		return (server_cmd_user(e, fd, server_cmd, split));
 
 	return (NULL);
