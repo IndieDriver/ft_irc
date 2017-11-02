@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:43:05 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 17:45:33 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_fd(t_env *e)
 		if (e->fds[i].type != FD_FREE)
 		{
 			FD_SET(i, &e->fd_read);
-			if (strlen(e->fds[i].buf_write) > 0)
+			if (ft_strlen(e->fds[i].buf_write) > 0)
 			{
 				FD_SET(i, &e->fd_write);
 			}

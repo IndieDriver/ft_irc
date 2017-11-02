@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 11:15:18 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 17:45:37 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define FD_SERV	1
 # define FD_CLIENT	2
 
-# define BUF_SIZE	4096
+# define BUF_SIZE	512
 
 # define Xv(err,res,str) (x_void(err,res,str,__FILE__,__LINE__))
 # define X(err,res,str) (x_int(err,res,str,__FILE__,__LINE__))
@@ -34,6 +34,14 @@ enum				e_arg_type
 {
 	NONE = 0, SINGLE = 1, OPTIONAL = 2, MULTI = 3
 };
+
+typedef struct		s_ring_buffer
+{
+	char			**buffer;
+	size_t			head;
+	size_t			tail;
+	size_t			size;
+}					t_ring_buffer;
 
 typedef struct		s_server_command
 {
@@ -63,6 +71,8 @@ typedef struct		s_fd
 	int				type;
 	void			(*fct_read)();
 	void			(*fct_write)();
+	t_ring_buffer	rbuffer_write;
+	t_ring_buffer	rbuffer_read;
 	char			buf_read[BUF_SIZE + 1];
 	char			buf_write[BUF_SIZE + 1];
 	t_user			user;
@@ -153,5 +163,12 @@ void				broadcast_msg_channel(t_env *e, t_chan *chan, char *msg);
 void				broadcast_msg_users_channel(t_env *e, char *nick, char *msg);
 void				broadcast_msg_server(t_env *e, char *msg);
 void				broadcast_msg(t_env *e, char *dest, char *msg);
+
+int					rb_reset(t_ring_buffer *buffer);
+int					rb_empty(t_ring_buffer *buffer);
+int					rb_full(t_ring_buffer *buffer);
+t_ring_buffer		*rb_init(t_ring_buffer *buffer, size_t size);
+int					rb_put(t_ring_buffer *buffer, char *data);
+char				*rb_get(t_ring_buffer *buffer);
 
 #endif

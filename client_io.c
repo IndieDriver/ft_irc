@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 12:10:14 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 15:11:45 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ void	read_from_server(t_env_client *e)
 
 void	write_to_server(t_env_client *e, char *buffer)
 {
+	printf("[%d] message send: %s", e->server_soc, buffer);
 	X(-1, send(e->server_soc, buffer, BUF_SIZE, 0), "send");
 }
 
 void	write_msg_to_server(char *msg, int cs)
 {
+	printf("[%d] message send: %s", cs, msg);
 	X(-1, send(cs, msg, BUF_SIZE, 0), "send");
 }
 

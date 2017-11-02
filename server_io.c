@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 14:36:11 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 16:24:16 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,26 @@
 #include <sys/socket.h>
 #include "bircd.h"
 
+int		read_client(t_env *e, int cs)
+{
+	int r;
+	int sum;
+
+	r = recv(cs, e->fds[cs].buf_read, BUF_SIZE, 0);
+	if (r <= 0)
+		return (-1);
+	else if (r < BUF_SIZE)
+	{
+		sum = r;
+		while (sum < BUF_SIZE)
+		{
+			r = recv(cs, e->fds[cs].buf_read + sum, BUF_SIZE - sum, 0);
+			sum += r;
+		}
+	}
+	return (1);
+}
+
 void	read_from_client(t_env *e, int cs)
 {
 	char	*response;
@@ -22,6 +42,7 @@ void	read_from_client(t_env *e, int cs)
 
 	ft_bzero(e->fds[cs].buf_read, BUF_SIZE);
 	r = recv(cs, e->fds[cs].buf_read, BUF_SIZE, 0);
+	//r = read_client(e, cs);
 	if (r <= 0)
 	{
 		if (e->fds[cs].has_login)

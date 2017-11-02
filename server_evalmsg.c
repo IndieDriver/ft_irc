@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 12:58:25 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 15:08:14 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ char 	*server_cmd_join(t_env *e, t_server_response *response,
 	ft_strncat(rpl, response->raw_msg, 510);
 	ft_strncat(rpl, "\r\n", 512);
 	chan = add_channel(&e->serv->channels, response->split[1]);
-	broadcast_msg_channel(e, chan, rpl);
 	add_user_to_channel(&e->serv->channels,
 			get_user(e->serv, response->fd->user.nick),
 			response->split[1]);
+	broadcast_msg_channel(e, chan, rpl);
 	free (rpl);
 	return (NULL);
 }

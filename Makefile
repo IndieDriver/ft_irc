@@ -6,16 +6,14 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/11/02 14:33:58 by amathias         ###   ########.fr        #
+#    Updated: 2017/11/02 17:33:07 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCSERVER =	main_server.c		\
 			server_io.c			\
 			x.c					\
-			main_loop.c			\
 			init_fd.c			\
-			do_select.c			\
 			srv_create.c		\
 			srv_accept.c		\
 			irc_cmd.c			\
@@ -28,6 +26,8 @@ SRCSERVER =	main_server.c		\
 			prefix.c			\
 			irc_reply.c			\
 			broadcast.c			\
+			ring_buffer.c		\
+			ring_buffer_utils.c	\
 
 SRCCLIENT =	main_client.c		\
 			client_io.c			\
