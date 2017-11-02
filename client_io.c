@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:45:08 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 11:47:56 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,17 @@ void	check_fd_client(t_env_client *e)
 	if (FD_ISSET(STDIN_FILENO, &e->fd_read))
 	{
 		fgets(e->stdin_fd.buf_write, BUF_SIZE, stdin);
-		if (ft_strstr(e->stdin_fd.buf_write, "\n"))
+		if ((cmd = ft_strstr(e->stdin_fd.buf_write, "\n")))
 		{
-			e->stdin_fd.buf_write[BUF_SIZE] = '\0';
+			printf("need escape\n");
+			*cmd = '\0';
+			if(ft_strstr(e->stdin_fd.buf_write, "\n"))
+			{
+				printf("not escaped\n");
+			}
+
+			//ft_strstr(e->stdin_fd.buf_write, "\n");
+			//e->stdin_fd.buf_write[BUF_SIZE] = '\0';
 		}
 		cmd = get_request(e, e->stdin_fd.buf_write);
 		if (e->connected && cmd)

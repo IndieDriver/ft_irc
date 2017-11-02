@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 16:19:42 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 11:35:52 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*handle_client_command(t_env_client *e, char **split)
 	tmp = NULL;
 	if (ft_strstr(split[0], "/connect"))
 		tmp = cmd_connect(e, split);
+	else if (ft_strstr(split[0], "/nick") && split[1] != NULL)
+		register_connection(e, split[1]);
 	else
 	{
 		command_index = get_client_command_index(split[0]);

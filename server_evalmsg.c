@@ -6,108 +6,128 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 18:11:03 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 11:57:09 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "bircd.h"
 
-char 	*server_cmd_user(t_env *e, t_fd *fd, t_server_command server_cmd,
-			char **split)
+char 	*server_cmd_user(t_env *e, t_server_response *response, t_server_command server_cmd)
 {
-	fd->user.user = ft_strdup(split[1]);
 	(void)server_cmd;
-	if (fd->user.nick != NULL && is_nick_free(e->serv->users, fd->user.nick))
+	response->fd->user.user = ft_strdup(response->split[1]);
+	if (response->fd->user.nick != NULL && is_nick_free(e->serv->users, response->fd->user.nick))
 	{
-		add_user(e->serv, copy_user(&fd->user));
-		fd->has_login = 1;
-		return (rpl_welcome(e, fd, &fd->user));
+		add_user(e->serv, copy_user(&response->fd->user));
+		response->fd->has_login = 1;
+		return (rpl_welcome(e, response->fd, &response->fd->user));
 	}
 	return (NULL);
 }
 
-char 	*server_cmd_nick(t_env *e, t_fd *fd, t_server_command server_cmd,
-			char **split)
+char 	*server_cmd_nick(t_env *e, t_server_response *response, t_server_command server_cmd)
 {
 	(void)server_cmd;
-	fd->user.nick = ft_strdup(split[1]);
-	if (is_nick_free(e->serv->users, split[1]))
+	response->fd->user.nick = ft_strdup(response->split[1]);
+	if (is_nick_free(e->serv->users, response->split[1]))
 	{
-		if (fd->user.user != NULL)
+		if (response->fd->user.user != NULL)
 		{
-			add_user(e->serv, copy_user(&fd->user));
-			fd->has_login = 1;
-			return (rpl_welcome(e, fd, &fd->user));
+			add_user(e->serv, copy_user(&response->fd->user));
+			response->fd->has_login = 1;
+			return (rpl_welcome(e, response->fd, &response->fd->user));
 		}
 		else
 			return (NULL);
 	}
 	else
-		return (rpl_nickinuse(e, fd, &fd->user));
+		return (rpl_nickinuse(e, response->fd, &response->fd->user));
 	return (NULL);
 }
 
-char 	*server_cmd_privmsg(t_env *e, t_fd *fd, char *msg)
+char 	*server_cmd_privmsg(t_env *e, t_server_response *response, t_server_command server_cmd)
 {
 	char *rpl;
 	char *fci;
 
+	(void)server_cmd;
 	(void)e;
 	if (!(rpl = malloc(sizeof(char) * 510)))
 		return (NULL);
 	rpl[0] = '\0';
-	fci = user_to_prefix(&fd->user);
+	fci = user_to_prefix(&response->fd->user);
 	ft_strncat(rpl, fci, 510);
 	free (fci);
 	ft_strncat(rpl, " ", 510);
-	ft_strncat(rpl, msg, 510);
-	broadcast_msg_server(e, rpl);
+	ft_strncat(rpl, response->raw_msg, 510);
+	broadcast_msg(e, response->split[1], rpl);
 	free (rpl);
 	return (NULL);
 }
 
-char	*handle_command_split(t_env *e, t_fd *fd, t_server_command server_cmd,
-			char **split)
+char 	*server_cmd_join(t_env *e, t_server_response *response, t_server_command server_cmd)
+{
+	char *rpl;
+	char *fci;
+	t_chan *chan;
+
+	(void)e;
+	(void)server_cmd;
+	printf("cmd_join\n");
+	if (!(rpl = malloc(sizeof(char) * 510)))
+		return (NULL);
+	rpl[0] = '\0';
+	fci = user_to_prefix(&response->fd->user);
+	ft_strncat(rpl, fci, 510);
+	free (fci);
+	ft_strncat(rpl, " ", 510);
+	ft_strncat(rpl, response->raw_msg, 510);
+	chan = get_chan(e->serv->channels, response->split[1]);
+	if (chan == NULL)
+		chan = add_channel(&e->serv->channels, response->split[1]);
+	broadcast_msg_channel(e, chan, rpl);
+	add_user_to_channel(&e->serv->channels,
+			get_user(e->serv, response->fd->user.nick),
+			response->split[1]);
+	print_channellist(e->serv->channels);
+	free (rpl);
+	return (NULL);
+}
+
+char	*handle_command_split(t_env *e, t_server_response *response, t_server_command server_cmd)
 {
 	if (ft_strcmp(server_cmd.irc_cmd, "NICK") == 0)
-		return (server_cmd_nick(e, fd, server_cmd, split));
+		return (server_cmd_nick(e, response, server_cmd));
 	else if (ft_strcmp(server_cmd.irc_cmd, "USER") == 0)
-		return (server_cmd_user(e, fd, server_cmd, split));
+		return (server_cmd_user(e, response, server_cmd));
+	else if (response->fd->has_login &&
+			ft_strcmp(server_cmd.irc_cmd, "PRIVMSG") == 0)
+		return (server_cmd_privmsg(e, response, server_cmd));
+	else if (response->fd->has_login &&
+			ft_strcmp(server_cmd.irc_cmd, "JOIN") == 0)
+		return (server_cmd_join(e, response, server_cmd));
 	return (NULL);
 }
 
-char	*handle_command_chaining(t_env *e, t_fd *fd,
-			t_server_command server_cmd, char *msg)
-{
-	//For Every command that just need chaining
-	if (ft_strcmp(server_cmd.irc_cmd, "PRIVMSG") == 0)
-		return (server_cmd_privmsg(e, fd, msg));
-
-	return (NULL);
-}
-
-char	*handle_server_command(t_env *e, t_fd *fd, char *msg, char **split)
+char	*handle_server_command(t_env *e, t_server_response *response)
 {
 	char				*tmp;
 	int					command_index;
 	t_server_command	server_cmd;
 
-	(void)msg;
 	(void)e;
 	tmp = NULL;
-	command_index = get_server_command_index(split[0]);
+	command_index = get_server_command_index(response->split[0]);
 	if (command_index == -1)
 	{
 		ft_putendl_fd("Unrecognized command\n", 2);
 		return (NULL);
 	}
 	server_cmd = g_server_commands[command_index];
-	if (is_valid_server_command(server_cmd, split))
+	if (is_valid_server_command(server_cmd, response->split))
 	{
-		tmp = handle_command_split(e, fd, server_cmd, split);
-		if (tmp == NULL)
-			tmp = handle_command_chaining(e, fd, server_cmd, msg);
+		tmp = handle_command_split(e, response, server_cmd);
 	}
 	else
 		ft_putendl_fd("Invalid usage", 2);
@@ -116,22 +136,26 @@ char	*handle_server_command(t_env *e, t_fd *fd, char *msg, char **split)
 
 char	*server_evalmsg(t_env *e, t_fd *fd)
 {
-	char	*res;
-	char	**split;
-	int		i;
+	t_server_response	response;
+	char				*res;
+	int					i;
 
 	res = NULL;
-	split = ft_strsplit(fd->buf_read, ' ');
-	if (split != NULL)
+	response.fd = fd;
+	if ((response.raw_msg = ft_strstr(fd->buf_read, "\r\n")))
+		*response.raw_msg = '\0';
+	response.split = ft_strsplit(fd->buf_read, ' ');
+	response.raw_msg = fd->buf_read;
+	if (response.split != NULL)
 	{
-		res = handle_server_command(e, fd, fd->buf_read, split);
+		res = handle_server_command(e, &response);
 	}
 	i = 0;
-	while (split[i])
+	while (response.split[i])
 	{
-		free(split[i]);
+		free(response.split[i]);
 		i++;
 	}
-	free(split);
+	free(response.split);
 	return (res);
 }

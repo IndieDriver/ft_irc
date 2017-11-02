@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:14 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:44:53 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 10:40:48 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	init_env_client(t_env_client *e)
 	init_fds(&e->stdin_fd);
 	init_fds(&e->server_fd);
 	e->running = 1;
-
 }
 
 char	*get_opt(t_env_client *e, int ac, char **av)

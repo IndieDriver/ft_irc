@@ -6,19 +6,19 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 17:26:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:05:02 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 10:57:32 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
 
-void		add_channel(t_chan **channels, char *name)
+t_chan		*add_channel(t_chan **channels, char *name)
 {
 	t_chan *chan;
 
 	chan = NULL;
 	if ((chan = malloc(sizeof(t_chan))) == NULL)
-		return ;
+		return (NULL);
 	if (name != NULL)
 	{
 		chan->name = name;
@@ -27,6 +27,7 @@ void		add_channel(t_chan **channels, char *name)
 	}
 	chan->next = *channels;
 	*channels = chan;
+	return (chan);
 }
 
 void		remove_channel(t_chan **channels, char *name)
