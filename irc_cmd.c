@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:37:45 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 15:20:35 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 12:58:55 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ const t_server_command g_server_commands[] = {
 	{"NICK", SINGLE, NONE, NONE, NONE},
 	{"JOIN", SINGLE, NONE, NONE, NONE},
 	{"PART", SINGLE, NONE, NONE, NONE},
-	{"USERS", NONE, NONE, NONE, NONE},
+	{"WHO", NONE, NONE, NONE, NONE},
 	{"USER", SINGLE, SINGLE, SINGLE, MULTI}
 };
 
@@ -26,7 +26,7 @@ const t_client_command g_client_commands[] = {
 	{"/nick", "NICK", SINGLE, NONE, NONE, NONE, "/nick <nickname>"},
 	{"/join", "JOIN", SINGLE, NONE, NONE, NONE, "/join <chan>"},
 	{"/leave", "PART", SINGLE, NONE, NONE, NONE, "/leave <chan>"},
-	{"/who", "USERS", NONE, NONE, NONE, NONE, "/who"},
+	{"/who", "WHO", NONE, NONE, NONE, NONE, "/who"},
 	{"/user", "USER", SINGLE, SINGLE, SINGLE, MULTI,
 		"/user <user> <mode> <unused> <realname>"},
 

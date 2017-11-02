@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:51:52 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 14:36:11 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	write_to_client(t_env *e, int cs)
 void	write_msg_to_client(char *msg, int cs)
 {
 	if (cs != -1)
+	{
+		printf("[%d] message send: %s", cs, msg);
 		X(-1, send(cs, msg, BUF_SIZE, 0), "send");
+	}
 }
 
 void	check_fd_server(t_env *e)

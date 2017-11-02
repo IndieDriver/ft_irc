@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 17:26:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 10:57:32 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 12:40:13 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,18 @@ t_chan		*add_channel(t_chan **channels, char *name)
 	t_chan *chan;
 
 	chan = NULL;
+	if (!is_channel_name_valid(name))
+	{
+		ft_putendl_fd("Error channel name must start with #", 2);
+		return (NULL);
+	}
+	if (!is_channel_name_free(*channels, name))
+		return (NULL);
 	if ((chan = malloc(sizeof(t_chan))) == NULL)
 		return (NULL);
 	if (name != NULL)
 	{
-		chan->name = name;
+		chan->name = ft_strdup(name);
 		chan->users = NULL;
 		chan->next = NULL;
 	}
@@ -40,6 +47,7 @@ void		remove_channel(t_chan **channels, char *name)
 	{
 		*channels = tmp->next;
 		clear_userlist(&tmp->users);
+		free(tmp->name);
 		free(tmp);
 		return ;
 	}
@@ -52,6 +60,7 @@ void		remove_channel(t_chan **channels, char *name)
 		return ;
 	prev->next = tmp->next;
 	clear_userlist(&tmp->users);
+	free(tmp->name);
 	free(tmp);
 }
 
@@ -82,11 +91,9 @@ void		add_user_to_channel(t_chan **channels, t_user *user,
 
 	chan = get_chan(*channels, chan_name);
 	if (chan == NULL)
-	{
-		add_channel(channels, chan_name);
-		chan = get_chan(*channels, chan_name);
-	}
-	add_user_to_list(&chan->users, copy_user(user));
+		return ;
+	if (!is_user_in_channel(chan, user->nick))
+		add_user_to_list(&chan->users, copy_user(user));
 }
 
 void		remove_user_from_channel(t_chan *channels, t_user *user,
@@ -99,5 +106,4 @@ void		remove_user_from_channel(t_chan *channels, t_user *user,
 	{
 		remove_user_from_list(&chan->users, user->nick);
 	}
-	//add_user_to_list(&chan->users, user);
 }
