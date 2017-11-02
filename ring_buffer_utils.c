@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 17:21:59 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 17:38:21 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 18:51:54 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				rb_reset(t_ring_buffer *buffer)
 
 int				rb_empty(t_ring_buffer *buffer)
 {
-	return (buffer->head == buffer->tail);
+	return ((buffer->head == buffer->tail));
 }
 
 int				rb_full(t_ring_buffer *buffer)

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 10:51:31 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 10:12:07 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 19:12:26 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	send_message_to_user(t_env *e, char *user, char *msg)
 	fd = get_client_fd(e, user);
 	if (fd != -1)
 	{
-		write_msg_to_client(msg, fd);
+		append_msg_client(e, msg, fd);
 	}
 }
 
@@ -41,7 +41,7 @@ void	broadcast_msg_channel(t_env *e, t_chan *chan, char *msg)
 		fd = get_client_fd(e, user->nick);
 		if (fd != -1)
 		{
-			write_msg_to_client(msg, fd);
+			append_msg_client(e, msg, fd);
 		}
 		user = user->next;
 	}
@@ -73,7 +73,7 @@ void	broadcast_msg_server(t_env *e, char *msg)
 		fd = get_client_fd(e, user->nick);
 		if (fd != -1)
 		{
-			write_msg_to_client(msg, fd);
+			append_msg_client(e, msg, fd);
 		}
 		user = user->next;
 	}

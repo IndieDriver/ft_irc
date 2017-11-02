@@ -6,7 +6,7 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/11/02 17:33:07 by amathias         ###   ########.fr        #
+#    Updated: 2017/11/02 18:20:32 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ SRCCLIENT =	main_client.c		\
 			cli_evalres.c		\
 			prefix.c			\
 			users.c				\
+			ring_buffer.c		\
+			ring_buffer_utils.c	\
 
 OBJSERVER = $(SRCSERVER:.c=.o)
 OBJCLIENT = $(SRCCLIENT:.c=.o)

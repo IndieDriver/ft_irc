@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:14 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 10:40:48 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 19:25:42 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	clean_fd(t_fd *fd)
 	fd->user.user = NULL;
 	fd->user.socket = -1;
 	fd->has_login = 0;
+	rb_reset(&fd->rbuffer_write);
+	rb_reset(&fd->rbuffer_read);
 }
 
 void	init_fds(t_fd *fd)
@@ -44,12 +46,18 @@ void	init_fds(t_fd *fd)
 	fd->user.user = NULL;
 	fd->user.socket = -1;
 	fd->has_login = 0;
+	rb_reset(&fd->rbuffer_write);
+	rb_reset(&fd->rbuffer_read);
 }
 
 void	init_env_client(t_env_client *e)
 {
 	e->max = 0;
 	e->connected = 0;
+	rb_init(&e->stdin_fd.rbuffer_write, 10);
+	rb_init(&e->stdin_fd.rbuffer_read, 10);
+	rb_init(&e->server_fd.rbuffer_write, 10);
+	rb_init(&e->server_fd.rbuffer_read, 10);
 	init_fds(&e->stdin_fd);
 	init_fds(&e->server_fd);
 	e->running = 1;

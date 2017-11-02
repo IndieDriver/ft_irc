@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 17:45:37 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 19:28:24 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ typedef struct		s_fd
 	void			(*fct_write)();
 	t_ring_buffer	rbuffer_write;
 	t_ring_buffer	rbuffer_read;
-	char			buf_read[BUF_SIZE + 1];
-	char			buf_write[BUF_SIZE + 1];
 	t_user			user;
 	int				has_login;
 }					t_fd;
@@ -102,6 +100,7 @@ typedef struct		s_env_client
 	int				r;
 	int				connected;
 	fd_set			fd_read;
+	fd_set			fd_write;
 	int				running;
 }					t_env_client;
 
@@ -118,9 +117,9 @@ void				cli_create(t_env_client *e, const char *addr, int port);
 void				srv_accept(t_env *e, int s);
 
 void				write_to_client(t_env *e, int clientsocket);
-void				write_msg_to_client(char *msg, int cs);
+void				append_msg_client(t_env *e, char *msg, int cs);
 void				write_to_server(t_env_client *e, char *buffer);
-void				write_msg_to_server(char *msg, int cs);
+void				append_msg_server(t_env_client *e, char *msg);
 int					get_client_fd(t_env *e, char *nick);
 
 void				read_from_client(t_env *e, int clientsocket);
@@ -170,5 +169,6 @@ int					rb_full(t_ring_buffer *buffer);
 t_ring_buffer		*rb_init(t_ring_buffer *buffer, size_t size);
 int					rb_put(t_ring_buffer *buffer, char *data);
 char				*rb_get(t_ring_buffer *buffer);
+char				*rb_pop(t_ring_buffer *buffer);
 
 #endif

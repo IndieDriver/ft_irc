@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 17:45:33 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 19:30:09 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@
 void	init_fd_client(t_env_client *e)
 {
 	FD_ZERO(&e->fd_read);
-	//FD_ZERO(&e->fd_write); TODO: test this
+	FD_ZERO(&e->fd_write);
 	FD_SET(STDIN_FILENO, &e->fd_read);
 	e->max = MAX(e->max, STDIN_FILENO);
 	if (e->connected)
 	{
 		FD_SET(e->server_soc, &e->fd_read);
+		if (!rb_empty(&e->server_fd.rbuffer_write))
+		{
+			FD_SET(e->server_soc, &e->fd_write);
+		}
 		e->max = MAX(e->max, e->server_soc);
 	}
 	else
@@ -42,10 +46,15 @@ void	init_fd(t_env *e)
 		if (e->fds[i].type != FD_FREE)
 		{
 			FD_SET(i, &e->fd_read);
-			if (ft_strlen(e->fds[i].buf_write) > 0)
+			if (!rb_empty(&e->fds[i].rbuffer_write))
 			{
 				FD_SET(i, &e->fd_write);
 			}
+			/*
+			if (ft_strlen(e->fds[i].buf_write) > 0)
+			{
+				FD_SET(i, &e->fd_write);
+			} */
 			e->max = MAX(e->max, i);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 15:46:20 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 17:39:57 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 19:21:10 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				rb_put(t_ring_buffer *buffer, char *data)
 		ft_strncpy(buffer->buffer[buffer->head], data, 512);
 		//buffer->buffer[buffer->head] = data;
 		buffer->head = (buffer->head + 1) % buffer->size;
-		if (rb_full(buffer))
+		if (rb_empty(buffer))
 		{
 			buffer->tail = (buffer->tail + 1) % buffer->size;
 		}
@@ -52,6 +52,15 @@ int				rb_put(t_ring_buffer *buffer, char *data)
 }
 
 char			*rb_get(t_ring_buffer *buffer)
+{
+	if (buffer && !rb_empty(buffer))
+	{
+		return (buffer->buffer[buffer->tail]);
+	}
+	return (NULL);
+}
+
+char			*rb_pop(t_ring_buffer *buffer)
 {
 	size_t old_tail;
 	if (buffer && !rb_empty(buffer))

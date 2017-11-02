@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 11:49:38 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 19:17:45 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,6 @@ void	init_client(t_env_client *e, int client_socket)
 
 void	register_connection(t_env_client *e, char *nick)
 {
-	/*
-	NICK amathias
-	USER amathias * * :default user
-	 */
 	char request[512];
 	char login[256];
 
@@ -44,15 +40,14 @@ void	register_connection(t_env_client *e, char *nick)
 	ft_strncat(request, "NICK ", 510);
 	nick ? ft_strncat(request, nick, 510) : ft_strncat(request, login, 510);
 	ft_strncat(request, "\r\n", 512);
-	//cmd = get_request(e, request);
-	e->server_fd.fct_write(e, request);
+	append_msg_server(e, request);
 
 	ft_bzero(request, 512);
 	ft_strncat(request, "USER ", 510);
 	nick ? ft_strncat(request, nick, 510) : ft_strncat(request, login, 510);
 	ft_strncat(request, " * * :default user", 510);
 	ft_strncat(request, "\r\n", 512);
-	e->server_fd.fct_write(e, request);
+	append_msg_server(e, request);
 }
 
 void	cli_create(t_env_client *e, const char *addr, int port)

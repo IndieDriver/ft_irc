@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 15:11:45 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 19:34:41 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	read_from_server(t_env_client *e)
 	char	*response;
 	int		r;
 
-	response = NULL;
-	ft_bzero(e->server_fd.buf_read, BUF_SIZE);
-	r = recv(e->server_soc, e->server_fd.buf_read, BUF_SIZE, 0);
+	response = ft_strnew(BUF_SIZE);
+	r = recv(e->server_soc, response, BUF_SIZE, 0);
+	rb_put(&e->server_fd.rbuffer_read, response);
+	free(response);
 	if (r <= 0)
 	{
 		close(e->server_soc);
@@ -32,9 +33,10 @@ void	read_from_server(t_env_client *e)
 	}
 	else
 	{
-		printf("[%d] message received: %s", e->server_soc, e->server_fd.buf_read);
-		e->stdin_fd.buf_read[BUF_SIZE] = '\0';
-		response = client_evalmsg(e, e->server_fd.buf_read);
+		printf("[%d] message received: %s", e->server_soc,
+				rb_get(&e->server_fd.rbuffer_read));
+		//e->stdin_fd.buf_read[BUF_SIZE] = '\0';
+		response = client_evalmsg(e, rb_get(&e->server_fd.rbuffer_read));
 		if (response != NULL)
 		{
 			printf("response: %s", response);
@@ -47,32 +49,40 @@ void	write_to_server(t_env_client *e, char *buffer)
 {
 	printf("[%d] message send: %s", e->server_soc, buffer);
 	X(-1, send(e->server_soc, buffer, BUF_SIZE, 0), "send");
+	rb_pop(&e->server_fd.rbuffer_write);
 }
 
-void	write_msg_to_server(char *msg, int cs)
+void	append_msg_server(t_env_client *e, char *msg)
 {
-	printf("[%d] message send: %s", cs, msg);
-	X(-1, send(cs, msg, BUF_SIZE, 0), "send");
+	rb_put(&e->server_fd.rbuffer_write, msg);
 }
 
 void	check_fd_client(t_env_client *e)
 {
 	char *cmd;
+	char *tmp;
 
 	cmd = NULL;
-	if (e->connected && FD_ISSET(e->server_soc, &e->fd_read))
+	if (FD_ISSET(e->server_soc, &e->fd_write))
+	{
+		e->server_fd.fct_write(e, rb_get(&e->server_fd.rbuffer_write));
+	}
+	else if (e->connected && FD_ISSET(e->server_soc, &e->fd_read))
 	{
 		e->server_fd.fct_read(e);
 	}
 	if (FD_ISSET(STDIN_FILENO, &e->fd_read))
 	{
-		fgets(e->stdin_fd.buf_write, BUF_SIZE, stdin);
-		if ((cmd = ft_strstr(e->stdin_fd.buf_write, "\n")))
+		cmd = ft_strnew(BUF_SIZE);
+		fgets(cmd, BUF_SIZE, stdin);
+		if ((tmp = ft_strstr(cmd, "\n")))
 		{
-			*cmd = '\0';
-			e->stdin_fd.buf_write[BUF_SIZE] = '\0';
+			*tmp = '\0';
+			cmd[BUF_SIZE] = '\0';
 		}
-		cmd = get_request(e, e->stdin_fd.buf_write);
+		rb_put(&e->stdin_fd.rbuffer_write, cmd);
+		free(cmd);
+		cmd = get_request(e, rb_get(&e->stdin_fd.rbuffer_write));
 		if (e->connected && cmd)
 		{
 			e->server_fd.fct_write(e, cmd);

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 15:08:14 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/02 18:23:34 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,10 +201,11 @@ char	*server_evalmsg(t_env *e, t_fd *fd)
 
 	res = NULL;
 	response.fd = fd;
-	if ((response.raw_msg = ft_strstr(fd->buf_read, "\r\n")))
+	printf("rb_get: %s\n", rb_get(&fd->rbuffer_read));
+	if ((response.raw_msg = ft_strstr(rb_get(&fd->rbuffer_read), "\r\n")))
 		*response.raw_msg = '\0';
-	response.split = ft_strsplit(fd->buf_read, ' ');
-	response.raw_msg = fd->buf_read;
+	response.split = ft_strsplit(rb_get(&fd->rbuffer_read), ' ');
+	response.raw_msg = rb_get(&fd->rbuffer_read);
 	if (response.split != NULL)
 	{
 		res = handle_server_command(e, &response);
