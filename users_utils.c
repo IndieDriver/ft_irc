@@ -6,11 +6,33 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 18:10:37 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:43:38 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 18:48:02 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
+
+void	rename_user(t_env *e, t_user *old_user, char *new_nick)
+{
+	t_chan	*chan;
+	t_user	user;
+
+	chan = e->serv->channels;
+	user.nick = new_nick;
+	user.user = old_user->user;
+	user.hostname = old_user->hostname;
+	while (chan)
+	{
+		if (is_user_in_channel(chan, old_user->nick))
+		{
+			remove_user_from_channel(e->serv->channels, old_user, chan->name);
+			add_user_to_channel(&e->serv->channels, &user, chan->name);
+		}
+		chan = chan->next;
+	}
+	remove_user(e->serv, old_user->nick);
+	add_user(e->serv, &user);
+}
 
 char	*get_users_string(t_chan *chan)
 {

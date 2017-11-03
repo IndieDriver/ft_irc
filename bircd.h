@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 17:11:39 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 18:41:37 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int					is_valid_server_command(t_server_command cli_cmd,
 char				*server_evalmsg(t_env *e, t_fd *fd, char *msg);
 void				clear_server(t_env *e);
 void				print_serv(t_env *e);
+void				rename_user(t_env *e, t_user *old_user, char *new_nick);
 
 char				*client_evalmsg(t_env_client *e, char *cmd);
 

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:57:11 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 17:00:56 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 18:22:39 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	remove_user(t_serv *serv, char *nick)
 		ft_putstr_fd("No user named ", 2);
 		ft_putstr_fd(nick, 2);
 		ft_putendl_fd(" on server", 2);
+		return ;
 	}
 	tmp_chan = serv->channels;
 	while (tmp_chan)

@@ -6,7 +6,7 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/11/03 16:53:19 by amathias         ###   ########.fr        #
+#    Updated: 2017/11/03 18:52:47 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,9 @@ SRCCLIENT =	main_client.c		\
 			irc_cmd.c			\
 			cli_evalres.c		\
 			prefix.c			\
+			server.c			\
+			channel.c			\
+			channel_utils.c		\
 			users.c				\
 			users_utils.c		\
 			ring_buffer.c		\
@@ -54,7 +57,7 @@ SERVER = serveur
 CLIENT = client
 CC = clang
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -pedantic -g
+CFLAGS = -Wall -Werror -Wextra -pedantic -g -fsanitize=undefined
 
 LIB_PATH = ./libft/
 LIB_NAME = -lft

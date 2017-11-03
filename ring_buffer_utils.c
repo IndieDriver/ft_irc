@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 17:21:59 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 15:11:57 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:42:35 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int				rb_reset(t_ring_buffer *buffer)
 		i = 0;
 		while (i < buffer->size)
 		{
-			ft_bzero(buffer->buffer[i], BUF_SIZE);
+			ft_bzero(buffer->buffer[i], BUF_SIZE - 1);
 			i++;
 		}
 		r = 0;

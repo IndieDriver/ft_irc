@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 15:46:20 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:47:50 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:39:40 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ t_ring_buffer	*rb_init(t_ring_buffer *buffer, size_t size)
 {
 	size_t i;
 
-	rb_reset(buffer);
 	buffer->size = size;
 	if ((buffer->buffer = (char**)malloc(sizeof(char*) * size)) == NULL)
 		return (NULL);
 	i = 0;
 	while (i < size)
 	{
-		if ((buffer->buffer[i] = (char*)malloc(sizeof(char*) * BUF_SIZE + 1))
-				== NULL)
+		if ((buffer->buffer[i] =
+				(char*)malloc((sizeof(char) * BUF_SIZE) + 1)) == NULL)
 			return (NULL);
 		i++;
 	}
+	rb_reset(buffer);
 	return (buffer);
 }
 

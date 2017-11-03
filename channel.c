@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 17:26:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 12:40:13 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 18:18:15 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void		remove_channel(t_chan **channels, char *name)
 		return ;
 	prev->next = tmp->next;
 	clear_userlist(&tmp->users);
-	free(tmp->name);
+	if (tmp->name != NULL)
+		free(tmp->name);
 	free(tmp);
 }
 
@@ -90,7 +91,7 @@ void		add_user_to_channel(t_chan **channels, t_user *user,
 	t_chan *chan;
 
 	chan = get_chan(*channels, chan_name);
-	if (chan == NULL)
+	if (chan == NULL || user == NULL)
 		return ;
 	if (!is_user_in_channel(chan, user->nick))
 		add_user_to_list(&chan->users, copy_user(user));
@@ -102,7 +103,7 @@ void		remove_user_from_channel(t_chan *channels, t_user *user,
 	t_chan *chan;
 
 	chan = get_chan(channels, chan_name);
-	if (chan != NULL)
+	if (chan != NULL && user != NULL)
 	{
 		remove_user_from_list(&chan->users, user->nick);
 	}

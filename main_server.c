@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 16:44:43 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:43:22 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ void		clean_fd(t_fd *fd)
 	rb_reset(&fd->rbuffer_read);
 }
 
+void	init_fds(t_fd *fd)
+{
+	fd->type = FD_FREE;
+	fd->fct_read = NULL;
+	fd->fct_write = NULL;
+	fd->user.hostname = NULL;
+	fd->user.nick = NULL;
+	fd->user.hostname = NULL;
+	fd->user.user = NULL;
+	fd->user.socket = -1;
+	fd->has_login = 0;
+	rb_reset(&fd->rbuffer_write);
+	rb_reset(&fd->rbuffer_read);
+}
+
 void		init_env(t_env *e)
 {
 	int				i;
@@ -48,10 +63,10 @@ void		init_env(t_env *e)
 	{
 		rb_init(&e->fds[i].rbuffer_write, 10);
 		rb_init(&e->fds[i].rbuffer_read, 10);
-		clean_fd(&e->fds[i]);
+		init_fds(&e->fds[i]);
 		i++;
 	}
-	e->serv = (t_serv*)malloc(sizeof(t_serv*));
+	e->serv = (t_serv*)malloc(sizeof(t_serv));
 	e->serv->channels = NULL;
 	e->serv->users = NULL;
 	e->hostname = NULL;
