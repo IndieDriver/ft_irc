@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 18:23:34 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 12:30:15 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ char	*handle_server_command(t_env *e, t_server_response *response)
 	return (tmp);
 }
 
-char	*server_evalmsg(t_env *e, t_fd *fd)
+char	*server_evalmsg(t_env *e, t_fd *fd, char *msg)
 {
 	t_server_response	response;
 	char				*res;
@@ -201,11 +201,10 @@ char	*server_evalmsg(t_env *e, t_fd *fd)
 
 	res = NULL;
 	response.fd = fd;
-	printf("rb_get: %s\n", rb_get(&fd->rbuffer_read));
-	if ((response.raw_msg = ft_strstr(rb_get(&fd->rbuffer_read), "\r\n")))
+	if ((response.raw_msg = ft_strstr(msg, "\r\n")))
 		*response.raw_msg = '\0';
-	response.split = ft_strsplit(rb_get(&fd->rbuffer_read), ' ');
-	response.raw_msg = rb_get(&fd->rbuffer_read);
+	response.split = ft_strsplit(msg, ' ');
+	response.raw_msg = msg;
 	if (response.split != NULL)
 	{
 		res = handle_server_command(e, &response);

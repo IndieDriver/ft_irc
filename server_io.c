@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 11:02:54 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 12:41:30 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,9 @@
 #include <sys/socket.h>
 #include "bircd.h"
 
-/*
-int		read_client(t_env *e, int cs)
-{
-	int r;
-	int sum;
-
-	r = recv(cs, e->fds[cs].buf_read, BUF_SIZE, 0);
-	if (r <= 0)
-		return (-1);
-	else if (r < BUF_SIZE)
-	{
-		sum = r;
-		while (sum < BUF_SIZE)
-		{
-			r = recv(cs, e->fds[cs].buf_read + sum, BUF_SIZE - sum, 0);
-			sum += r;
-		}
-	}
-	return (1);
-} */
-
 void	read_from_client(t_env *e, int cs)
 {
+	char	*message;
 	char	*response;
 	int		r;
 
@@ -46,7 +26,6 @@ void	read_from_client(t_env *e, int cs)
 	printf("reponse: %s\n", response);
 	rb_put(&e->fds[cs].rbuffer_read, response);
 	free(response);
-	//r = read_client(e, cs);
 	if (r <= 0)
 	{
 		if (e->fds[cs].has_login)
@@ -55,12 +34,13 @@ void	read_from_client(t_env *e, int cs)
 		clean_fd(&e->fds[cs]);
 		printf("client #%d gone away\n", cs);
 	}
-	else
+	else if (rb_contain_message(&e->fds[cs].rbuffer_read))
 	{
-		printf("[%d] message received: %s", cs,
-				rb_get(&e->fds[cs].rbuffer_read));
-		response = server_evalmsg(e, &e->fds[cs]);
-		rb_pop(&e->fds[cs].rbuffer_read);
+		message = rb_get_message(&e->fds[cs].rbuffer_read);
+		printf("[%d] message received: %s", cs, message);
+		response = server_evalmsg(e, &e->fds[cs], message);
+		if (message)
+			free(message);
 		if (response != NULL)
 		{
 			printf("response: %s", response);

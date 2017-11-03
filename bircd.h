@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 10:55:44 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 12:29:54 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int					is_valid_client_command(t_client_command cli_cmd,
 int					is_valid_server_command(t_server_command cli_cmd,
 						char **split);
 
-char				*server_evalmsg(t_env *e, t_fd *fd);
+char				*server_evalmsg(t_env *e, t_fd *fd, char *msg);
 void				clear_server(t_env *e);
 void				print_serv(t_env *e);
 
@@ -164,12 +164,14 @@ void				broadcast_msg_users_channel(t_env *e, char *nick, char *msg);
 void				broadcast_msg_server(t_env *e, char *msg);
 void				broadcast_msg(t_env *e, char *dest, char *msg);
 
+int					rb_contain_message(t_ring_buffer *buffer);
+char				*rb_get_message(t_ring_buffer *buffer);
 int					rb_reset(t_ring_buffer *buffer);
 int					rb_empty(t_ring_buffer *buffer);
 int					rb_full(t_ring_buffer *buffer);
 t_ring_buffer		*rb_init(t_ring_buffer *buffer, size_t size);
 int					rb_put(t_ring_buffer *buffer, char *data);
 char				*rb_get(t_ring_buffer *buffer);
-char				*rb_pop(t_ring_buffer *buffer);
+void				rb_pop(t_ring_buffer *buffer);
 
 #endif

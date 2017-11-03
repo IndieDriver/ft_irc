@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 10:15:46 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 12:26:00 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	init_fd_client(t_env_client *e)
 		FD_SET(e->server_soc, &e->fd_read);
 		if (!rb_empty(&e->server_fd.rbuffer_write))
 		{
-			printf("rb not empty\n");
 			FD_SET(e->server_soc, &e->fd_write);
 		}
 		e->max = MAX(e->max, e->server_soc);
