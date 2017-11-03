@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 19:11:19 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 11:02:54 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	write_to_client(t_env *e, int cs)
 
 void	append_msg_client(t_env *e, char *msg, int cs)
 {
+	printf("[%d] message append: %s", cs, msg);
 	if (cs != -1)
 		rb_put(&e->fds[cs].rbuffer_write, msg);
 }
@@ -94,12 +95,15 @@ void	check_fd_server(t_env *e)
 	while ((i < e->maxfd) && (e->r > 0))
 	{
 		if (FD_ISSET(i, &e->fd_read))
+		{
 			e->fds[i].fct_read(e, i);
-		if (FD_ISSET(i, &e->fd_write))
-			e->fds[i].fct_write(e, i);
-		if (FD_ISSET(i, &e->fd_read) ||
-				FD_ISSET(i, &e->fd_write))
 			e->r--;
+		}
+		if (FD_ISSET(i, &e->fd_write))
+		{
+			e->fds[i].fct_write(e, i);
+			e->r--;
+		}
 		i++;
 	}
 }

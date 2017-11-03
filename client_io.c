@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 19:34:41 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 10:26:10 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	read_from_server(t_env_client *e)
 				rb_get(&e->server_fd.rbuffer_read));
 		//e->stdin_fd.buf_read[BUF_SIZE] = '\0';
 		response = client_evalmsg(e, rb_get(&e->server_fd.rbuffer_read));
+		rb_pop(&e->server_fd.rbuffer_read);
 		if (response != NULL)
 		{
 			printf("response: %s", response);
@@ -54,6 +55,7 @@ void	write_to_server(t_env_client *e, char *buffer)
 
 void	append_msg_server(t_env_client *e, char *msg)
 {
+	printf("append: %s", msg);
 	rb_put(&e->server_fd.rbuffer_write, msg);
 }
 
@@ -64,13 +66,9 @@ void	check_fd_client(t_env_client *e)
 
 	cmd = NULL;
 	if (FD_ISSET(e->server_soc, &e->fd_write))
-	{
 		e->server_fd.fct_write(e, rb_get(&e->server_fd.rbuffer_write));
-	}
 	else if (e->connected && FD_ISSET(e->server_soc, &e->fd_read))
-	{
 		e->server_fd.fct_read(e);
-	}
 	if (FD_ISSET(STDIN_FILENO, &e->fd_read))
 	{
 		cmd = ft_strnew(BUF_SIZE);
@@ -85,7 +83,9 @@ void	check_fd_client(t_env_client *e)
 		cmd = get_request(e, rb_get(&e->stdin_fd.rbuffer_write));
 		if (e->connected && cmd)
 		{
-			e->server_fd.fct_write(e, cmd);
+			//rb_put(&e->server_fd.rbuffer_read, cmd);
+			append_msg_server(e, cmd);
+			//e->server_fd.fct_write(e, cmd);
 			free(cmd);
 		}
 	}

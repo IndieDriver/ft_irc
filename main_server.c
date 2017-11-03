@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 17:32:40 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 11:03:18 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int			main(int ac, char **av)
 	{
 		init_fd(&e);
 		e.r = select(e.max + 1, &e.fd_read, &e.fd_write, NULL, NULL);
+		X(-1, e.r, "select");
 		check_fd_server(&e);
 	}
 	main_loop(&e);

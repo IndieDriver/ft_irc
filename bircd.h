@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 19:28:24 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 10:55:44 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/select.h>
 # include "libft/libft.h"
+# include <assert.h>
 # include "server.h"
 
 # define FD_FREE	0
