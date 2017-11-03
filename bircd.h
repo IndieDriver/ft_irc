@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 16:47:03 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:11:39 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct		s_server_response
 
 void				get_opt_server(t_env *e, int ac, char **av);
 char				*get_opt_client(t_env_client *e, int ac, char **av);
+int					is_valid_port(char *str);
 
 void				main_loop(t_env *e);
 void				srv_create(t_env *e, int port);

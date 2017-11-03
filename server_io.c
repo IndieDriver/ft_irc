@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 15:17:57 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:08:07 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	read_from_client(t_env *e, int cs)
 
 	response = ft_strnew(BUF_SIZE);
 	r = recv(cs, response, BUF_SIZE, 0);
-	printf("reponse: %s\n", response);
+	//printf("reponse: %s\n", response);
 	rb_put(&e->fds[cs].rbuffer_read, response);
 	free(response);
 	if (r <= 0)
@@ -62,7 +62,7 @@ void	write_to_client(t_env *e, int cs)
 
 void	append_msg_client(t_env *e, char *msg, int cs)
 {
-	printf("[%d] message append: %s", cs, msg);
+	//printf("[%d] message append: %s", cs, msg);
 	if (cs != -1)
 		rb_put(&e->fds[cs].rbuffer_write, msg);
 }

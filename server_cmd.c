@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 13:56:39 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:02:07 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:02:48 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ char	*server_cmd_user(t_env *e, t_server_response *response,
 			t_server_command server_cmd)
 {
 	(void)server_cmd;
+	if (response->fd->user.user != NULL)
+	{
+		free(response->fd->user.user);
+	}
 	response->fd->user.user = ft_strdup(response->split[1]);
 	if (response->fd->user.nick != NULL
 			&& is_nick_free(e->serv->users, response->fd->user.nick))
@@ -31,6 +35,11 @@ char	*server_cmd_nick(t_env *e, t_server_response *response,
 			t_server_command server_cmd)
 {
 	(void)server_cmd;
+	if (response->fd->user.nick != NULL)
+	{
+		remove_user(e->serv, response->fd->user.nick);
+		free(response->fd->user.nick);
+	}
 	response->fd->user.nick = ft_strdup(response->split[1]);
 	if (is_nick_free(e->serv->users, response->split[1]))
 	{

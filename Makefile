@@ -6,7 +6,7 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/11/03 15:47:16 by amathias         ###   ########.fr        #
+#    Updated: 2017/11/03 16:53:19 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCCLIENT =	main_client.c		\
 			cli_evalres.c		\
 			prefix.c			\
 			users.c				\
+			users_utils.c		\
 			ring_buffer.c		\
 			ring_buffer_utils.c	\
 

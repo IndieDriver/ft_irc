@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 15:38:52 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:12:59 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,19 @@ char	*cmd_connect(t_env_client *e, char **split)
 		ft_putendl_fd("Invalid usage: /connect <machine> [port]", 2);
 		return (NULL);
 	}
-	e->port = split[2] != NULL ? ft_atoi(split[2]) : 6697;
+	if (split[2])
+	{
+		if (is_valid_port(split[2]))
+			e->port = ft_atoi(split[2]);
+		else
+		{
+			ft_putendl_fd("Invalid port", 2);
+			e->port = 6697;
+		}
+	}
+	else
+		e->port = 6697;
+	//e->port = split[2] != NULL ? ft_atoi(split[2]) : 6697;
 	cli_create(e, split[1], e->port);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 16:45:43 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:18:40 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ void	register_connection(t_env_client *e, char *nick)
 	append_msg_server(e, request);
 }
 
+void	cli_close(t_env_client *e)
+{
+	if (e->server_soc != 0)
+	{
+		close(e->server_soc);
+		clean_fd(&e->server_fd);
+		ft_putendl("disconnecting from server");
+	}
+}
+
 void	cli_create(t_env_client *e, const char *addr, int port)
 {
 	int					s;
@@ -58,6 +68,7 @@ void	cli_create(t_env_client *e, const char *addr, int port)
 
 	if (addr == NULL)
 		return ;
+	cli_close(e);
 	pe = (struct protoent*)XV(NULL, getprotobyname("tcp"), "getprotobyname");
 	s = X(-1, socket(PF_INET, SOCK_STREAM, pe->p_proto), "socket");
 	hostinfo = gethostbyname(addr);

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 12:09:19 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 15:10:22 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 16:52:33 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	*handle_server_command(t_env_client *e, char *msg, char **split)
 	(void)msg;
 	user = prefix_to_user(split[0]);
 	print_message(split, msg, user);
+	free_user(user);
 	return (NULL);
 }
 
