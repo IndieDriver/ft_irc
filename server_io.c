@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 12:41:30 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:17:57 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	read_from_client(t_env *e, int cs)
 
 void	write_to_client(t_env *e, int cs)
 {
-	//TODO: if not fully send, append to rbuffer
 	char *msg;
 
+	//TODO: if not fully send, append to rbuffer
 	msg = rb_get(&e->fds[cs].rbuffer_write);
 	printf("[%d] message send: %s", cs, msg);
 	X(-1, send(cs, msg, BUF_SIZE, 0), "send");
@@ -88,7 +88,7 @@ void	check_fd_server(t_env *e)
 	}
 }
 
-int	get_client_fd(t_env *e, char *nick)
+int		get_client_fd(t_env *e, char *nick)
 {
 	int i;
 

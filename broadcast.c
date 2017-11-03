@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 10:51:31 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 19:12:26 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:48:18 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	broadcast_msg_users_channel(t_env *e, char *nick, char *msg)
 
 void	broadcast_msg_server(t_env *e, char *msg)
 {
-	t_user *user;
+	t_user	*user;
 	int		fd;
 
 	user = e->serv->users;

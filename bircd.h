@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 12:29:54 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:34:59 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,21 @@ t_ring_buffer		*rb_init(t_ring_buffer *buffer, size_t size);
 int					rb_put(t_ring_buffer *buffer, char *data);
 char				*rb_get(t_ring_buffer *buffer);
 void				rb_pop(t_ring_buffer *buffer);
+
+
+char				*server_cmd_user(t_env *e, t_server_response *response,
+						t_server_command server_cmd);
+char				*server_cmd_nick(t_env *e, t_server_response *response,
+						t_server_command server_cmd);
+char				*server_cmd_privmsg(t_env *e, t_server_response *response,
+						t_server_command server_cmd);
+char				*server_cmd_join(t_env *e, t_server_response *response,
+						t_server_command server_cmd);
+char				*server_cmd_part(t_env *e, t_server_response *response,
+						t_server_command server_cmd);
+char				*server_cmd_users(t_env *e, t_server_response *response,
+						t_server_command server_cmd);
+char				*server_cmd_who(t_env *e, t_server_response *response,
+						t_server_command server_cmd);
 
 #endif

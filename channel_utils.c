@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:31:28 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 12:32:05 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:48:44 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		clear_channellist(t_chan **channels)
 	*channels = NULL;
 }
 
-void	print_channellist(t_chan *begin)
+void		print_channellist(t_chan *begin)
 {
 	t_chan	*list;
 
@@ -71,7 +71,7 @@ void	print_channellist(t_chan *begin)
 	}
 }
 
-int		is_user_in_channel(t_chan *chan, char *nick)
+int			is_user_in_channel(t_chan *chan, char *nick)
 {
 	t_user	*list;
 

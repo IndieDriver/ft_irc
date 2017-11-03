@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 17:21:59 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 12:24:31 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:11:57 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char			*rb_get_message(t_ring_buffer *buffer)
 			if (ptr != NULL)
 			{
 				ft_strncat(msg, "\r\n", 512);
-				break;
+				break ;
 			}
 		}
 	}
@@ -58,8 +58,8 @@ char			*rb_get_message(t_ring_buffer *buffer)
 
 int				rb_reset(t_ring_buffer *buffer)
 {
-	size_t i;
-	int r;
+	size_t	i;
+	int		r;
 
 	r = -1;
 	if (buffer)

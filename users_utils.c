@@ -6,11 +6,34 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 18:10:37 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/30 14:35:57 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:43:38 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
+
+char	*get_users_string(t_chan *chan)
+{
+	t_user	*user;
+	char	*msg;
+
+	msg = ft_strnew(BUF_SIZE);
+	user = chan->users;
+	if (user && msg)
+	{
+		ft_strncat(msg, ":", BUF_SIZE);
+		ft_strncat(msg, chan->name, BUF_SIZE);
+		ft_strncat(msg, " ", BUF_SIZE);
+		while (user)
+		{
+			if (user != chan->users)
+				ft_strncat(msg, ", ", BUF_SIZE);
+			ft_strncat(msg, user->nick, BUF_SIZE);
+			user = user->next;
+		}
+	}
+	return (msg);
+}
 
 void	clear_userlist(t_user **users)
 {

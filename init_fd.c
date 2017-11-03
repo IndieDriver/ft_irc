@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 12:26:00 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:10:48 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ void	init_fd(t_env *e)
 			{
 				FD_SET(i, &e->fd_write);
 			}
-			/*
-			if (ft_strlen(e->fds[i].buf_write) > 0)
-			{
-				FD_SET(i, &e->fd_write);
-			} */
 			e->max = MAX(e->max, i);
 		}
 		i++;

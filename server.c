@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:57:11 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:01:15 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:13:04 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	add_user(t_serv *serv, t_user *user)
 	else
 	{
 		ft_putendl_fd("nick already in use", 2);
-		//TODO: send rep nick in use
 	}
 }
 

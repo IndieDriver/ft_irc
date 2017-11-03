@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 14:54:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:17:25 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:46:21 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_user	*parse_user_prefix(t_user *user,
 	return (user);
 }
 
-
 t_user	*prefix_to_user(char *prefix)
 {
 	t_user	*user;
@@ -41,7 +40,6 @@ t_user	*prefix_to_user(char *prefix)
 	hostname = ft_strstr(prefix, "@");
 	if (username == NULL || hostname == NULL)
 	{
-		// <nick>!<user>@<host>
 		ft_putendl_fd("Invalid prefix <nick>!<user>@<host>", 2);
 		return (NULL);
 	}

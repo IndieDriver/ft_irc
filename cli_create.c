@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 19:17:45 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:49:01 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	register_connection(t_env_client *e, char *nick)
 	nick ? ft_strncat(request, nick, 510) : ft_strncat(request, login, 510);
 	ft_strncat(request, "\r\n", 512);
 	append_msg_server(e, request);
-
 	ft_bzero(request, 512);
 	ft_strncat(request, "USER ", 510);
 	nick ? ft_strncat(request, nick, 510) : ft_strncat(request, login, 510);

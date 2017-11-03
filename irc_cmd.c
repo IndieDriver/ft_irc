@@ -6,13 +6,13 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:37:45 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 12:58:55 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:47:04 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
 
-const t_server_command g_server_commands[] = {
+const	t_server_command g_server_commands[] = {
 	{"PRIVMSG", SINGLE, MULTI, NONE, NONE},
 	{"NICK", SINGLE, NONE, NONE, NONE},
 	{"JOIN", SINGLE, NONE, NONE, NONE},
@@ -21,7 +21,7 @@ const t_server_command g_server_commands[] = {
 	{"USER", SINGLE, SINGLE, SINGLE, MULTI}
 };
 
-const t_client_command g_client_commands[] = {
+const	t_client_command g_client_commands[] = {
 	{"/msg", "PRIVMSG", SINGLE, MULTI, NONE, NONE, "/msg <nick> <message>"},
 	{"/nick", "NICK", SINGLE, NONE, NONE, NONE, "/nick <nickname>"},
 	{"/join", "JOIN", SINGLE, NONE, NONE, NONE, "/join <chan>"},
@@ -71,7 +71,7 @@ int		is_valid_server_command(t_server_command cli_cmd, char **split)
 	return (1);
 }
 
-int	get_server_command_index(char *str)
+int		get_server_command_index(char *str)
 {
 	int i;
 
@@ -85,7 +85,7 @@ int	get_server_command_index(char *str)
 	return (-1);
 }
 
-int	get_client_command_index(char *str)
+int		get_client_command_index(char *str)
 {
 	int i;
 

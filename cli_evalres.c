@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 12:09:19 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 14:58:51 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:10:22 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,19 @@ void	print_message(char **split, char *msg, t_user *user)
 	}
 }
 
-char	*handle_server_rpl(t_env_client *e, char *msg, char **split, int rpl_code)
+char	*handle_server_rpl(t_env_client *e, char *msg, char **split,
+			int rpl_code)
 {
 	char *start;
+
 	(void)e;
 	(void)split;
 	(void)rpl_code;
-
 	start = ft_strrchr(msg, ':');
 	if (start != NULL)
 	{
 		if (split[1])
-		ft_putstr(start + 1);
+			ft_putstr(start + 1);
 	}
 	return (NULL);
 }
@@ -55,7 +56,6 @@ char	*handle_server_command(t_env_client *e, char *msg, char **split)
 	(void)msg;
 	user = prefix_to_user(split[0]);
 	print_message(split, msg, user);
-	//printf("%s|%s|%s\n", user->nick, user->user, user->hostname);
 	return (NULL);
 }
 

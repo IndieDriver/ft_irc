@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 11:15:41 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:15:22 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,10 @@ void	read_from_server(t_env_client *e)
 	{
 		printf("[%d] message received: %s", e->server_soc,
 				rb_get(&e->server_fd.rbuffer_read));
-		//e->stdin_fd.buf_read[BUF_SIZE] = '\0';
 		response = client_evalmsg(e, rb_get(&e->server_fd.rbuffer_read));
 		rb_pop(&e->server_fd.rbuffer_read);
 		if (response != NULL)
-		{
-			printf("response: %s", response);
 			free(response);
-		}
 	}
 }
 
@@ -83,9 +79,7 @@ void	check_fd_client(t_env_client *e)
 		rb_pop(&e->stdin_fd.rbuffer_write);
 		if (e->connected && cmd)
 		{
-			//rb_put(&e->server_fd.rbuffer_read, cmd);
 			append_msg_server(e, cmd);
-			//e->server_fd.fct_write(e, cmd);
 			free(cmd);
 		}
 	}

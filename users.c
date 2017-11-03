@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 17:46:00 by amathias          #+#    #+#             */
-/*   Updated: 2017/10/31 17:04:13 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:43:56 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_user	*new_user(char *nick, char *username, char *hostname, int socket)
 	user->next = NULL;
 	return (user);
 }
+
 t_user	*copy_user(t_user *user)
 {
 	t_user *newuser;

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:56:55 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 19:12:14 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:45:53 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 char	*rpl_welcome(t_env *e, t_fd *fd, t_user *user)
 {
-	//:bar.example.com 001 amy :Welcome to the Internet Relay Network borja!borja@polaris.cs.uchicago.edu
 	char *rpl;
 	char *fci;
 

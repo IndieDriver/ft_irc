@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/02 11:35:52 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:12:36 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,15 @@ char	*get_command_msg(t_client_command cli_cmd, char **split)
 	int		last_argument;
 
 	last_argument = arg_with_colon(cli_cmd);
-	msg = malloc(sizeof(char) * 510); //510 'cause I need CRLF
+	msg = malloc(sizeof(char) * 510);
 	msg[0] = '\0';
 	ft_strncat(msg, cli_cmd.irc_cmd, 510);
 	ft_strncat(msg, " ", 510);
 	msg = append_arg(msg, cli_cmd.arg1, split, 1);
-
 	last_argument == 2 ? ft_strncat(msg, " :", 510) : ft_strncat(msg, " ", 510);
 	msg = append_arg(msg, cli_cmd.arg2, split, 2);
-
 	last_argument == 3 ? ft_strncat(msg, " :", 510) : ft_strncat(msg, " ", 510);
 	msg = append_arg(msg, cli_cmd.arg3, split, 3);
-
 	last_argument == 4 ? ft_strncat(msg, " :", 510) : ft_strncat(msg, " ", 510);
 	msg = append_arg(msg, cli_cmd.arg4, split, 4);
 	ft_strncat(msg, "\r\n", 512);
