@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:49:01 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 16:45:43 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	cli_create(t_env_client *e, const char *addr, int port)
 
 	if (addr == NULL)
 		return ;
-	pe = (struct protoent*)Xv(NULL, getprotobyname("tcp"), "getprotobyname");
+	pe = (struct protoent*)XV(NULL, getprotobyname("tcp"), "getprotobyname");
 	s = X(-1, socket(PF_INET, SOCK_STREAM, pe->p_proto), "socket");
 	hostinfo = gethostbyname(addr);
 	if (hostinfo == NULL)

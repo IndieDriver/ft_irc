@@ -6,11 +6,12 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/11/03 14:20:38 by amathias         ###   ########.fr        #
+#    Updated: 2017/11/03 15:47:16 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCSERVER =	main_server.c		\
+			get_opt.c			\
 			server_io.c			\
 			x.c					\
 			init_fd.c			\
@@ -32,6 +33,7 @@ SRCSERVER =	main_server.c		\
 			server_cmd2.c		\
 
 SRCCLIENT =	main_client.c		\
+			get_opt.c			\
 			client_io.c			\
 			x.c					\
 			cli_create.c		\

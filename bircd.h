@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:34:59 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 16:47:03 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@
 
 # define BUF_SIZE	512
 
-# define Xv(err,res,str) (x_void(err,res,str,__FILE__,__LINE__))
-# define X(err,res,str) (x_int(err,res,str,__FILE__,__LINE__))
+# define XV(err,res,str) (x_void(err,res,str,__FILE__))
+# define X(err,res,str) (x_int(err,res,str,__FILE__))
 # define MAX(a,b)	((a > b) ? a : b)
 
-# define USAGE		"Usage: %s port\n"
-# define CL_USAGE   "Usage: %s [hostname [port]]\n"
+# define USAGE		"Usage: ./server [port]"
+# define CL_USAGE   "Usage: ./client [hostname [port]]"
 
 enum				e_arg_type
 {
@@ -112,6 +112,9 @@ typedef struct		s_server_response
 	char			*raw_msg;
 }					t_server_response;
 
+void				get_opt_server(t_env *e, int ac, char **av);
+char				*get_opt_client(t_env_client *e, int ac, char **av);
+
 void				main_loop(t_env *e);
 void				srv_create(t_env *e, int port);
 void				cli_create(t_env_client *e, const char *addr, int port);
@@ -126,9 +129,10 @@ int					get_client_fd(t_env *e, char *nick);
 void				read_from_client(t_env *e, int clientsocket);
 void				read_from_server(t_env_client *e);
 void				clean_fd(t_fd *fd);
-int					x_int(int err, int res, char *str, char *file, int line);
-void				*x_void(void *err, void *res, char *str, char *file,
-						int line);
+
+int					x_int(int err, int res, char *str, char *file);
+void				*x_void(void *err, void *res, char *str, char *file);
+
 void				init_fd(t_env *e);
 void				init_fd_client(t_env_client *e);
 void				do_select(t_env *e);
@@ -160,7 +164,8 @@ char				*rpl_welcome(t_env *e, t_fd *fd, t_user *user);
 char				*rpl_nickinuse(t_env *e, t_fd *fd, t_user *user);
 
 void				broadcast_msg_channel(t_env *e, t_chan *chan, char *msg);
-void				broadcast_msg_users_channel(t_env *e, char *nick, char *msg);
+void				broadcast_msg_users_channel(t_env *e, char *nick,
+						char *msg);
 void				broadcast_msg_server(t_env *e, char *msg);
 void				broadcast_msg(t_env *e, char *dest, char *msg);
 
@@ -173,7 +178,6 @@ t_ring_buffer		*rb_init(t_ring_buffer *buffer, size_t size);
 int					rb_put(t_ring_buffer *buffer, char *data);
 char				*rb_get(t_ring_buffer *buffer);
 void				rb_pop(t_ring_buffer *buffer);
-
 
 char				*server_cmd_user(t_env *e, t_server_response *response,
 						t_server_command server_cmd);

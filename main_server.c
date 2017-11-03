@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 11:03:18 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 16:44:43 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		init_env(t_env *e)
 
 	X(-1, getrlimit(RLIMIT_NOFILE, &rlp), "getrlimit");
 	e->maxfd = rlp.rlim_cur;
-	e->fds = (t_fd*)Xv(NULL, malloc(sizeof(*e->fds) * e->maxfd), "malloc");
+	e->fds = (t_fd*)XV(NULL, malloc(sizeof(*e->fds) * e->maxfd), "malloc");
 	i = 0;
 	while (i < e->maxfd)
 	{
@@ -57,22 +57,12 @@ void		init_env(t_env *e)
 	e->hostname = NULL;
 }
 
-void		get_opt(t_env *e, int ac, char **av)
-{
-	e->port = ac == 2 ? ft_atoi(av[2]) : 6697;
-	if (ac > 2)
-	{
-		fprintf(stderr, USAGE, av[0]);
-		exit(1);
-	}
-}
-
 int			main(int ac, char **av)
 {
 	t_env	e;
 
 	init_env(&e);
-	get_opt(&e, ac, av);
+	get_opt_server(&e, ac, av);
 	srv_create(&e, e.port);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:14 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 11:03:36 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:52:30 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,13 @@ void	init_env_client(t_env_client *e)
 	e->running = 1;
 }
 
-char	*get_opt(t_env_client *e, int ac, char **av)
-{
-	char *hostname;
-
-	hostname = (ac == 2 || ac == 3) ? ft_strdup(av[1]) : NULL;
-	e->port = ac == 3 ? ft_atoi(av[2]) : 6697;
-	if (ac > 3)
-	{
-		fprintf(stderr, CL_USAGE, av[0]);
-		exit(1);
-	}
-	return (hostname);
-}
-
 int		main(int ac, char **av)
 {
 	t_env_client	e;
 	char			*hostname;
 
 	init_env_client(&e);
-	hostname = get_opt(&e, ac, av);
+	hostname = get_opt_client(&e, ac, av);
 	cli_create(&e, hostname, e.port);
 	while (e.running)
 	{

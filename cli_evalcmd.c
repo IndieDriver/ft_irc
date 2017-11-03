@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 15:12:36 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:38:52 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*get_request(t_env_client *e, char *cmd)
 	int		i;
 	char	*request;
 
-	if (cmd == NULL)
+	if (cmd == NULL || ft_strlen(cmd) == 0)
 		return (NULL);
 	request = NULL;
 	split = ft_strsplit(cmd, ' ');
