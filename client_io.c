@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 10:26:10 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/03 11:15:41 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	write_to_server(t_env_client *e, char *buffer)
 
 void	append_msg_server(t_env_client *e, char *msg)
 {
-	printf("append: %s", msg);
 	rb_put(&e->server_fd.rbuffer_write, msg);
 }
 
@@ -81,6 +80,7 @@ void	check_fd_client(t_env_client *e)
 		rb_put(&e->stdin_fd.rbuffer_write, cmd);
 		free(cmd);
 		cmd = get_request(e, rb_get(&e->stdin_fd.rbuffer_write));
+		rb_pop(&e->stdin_fd.rbuffer_write);
 		if (e->connected && cmd)
 		{
 			//rb_put(&e->server_fd.rbuffer_read, cmd);
