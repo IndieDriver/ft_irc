@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 12:09:19 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/05 15:50:59 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 16:16:17 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	print_message(char **split, char *msg, t_user *user)
 		ft_putstr(": ");
 		ft_putstr(start + 1);
 	}
+	else
+		ft_putstr(msg);
 }
 
 char	*handle_server_rpl(t_env_client *e, char *msg, char **split,

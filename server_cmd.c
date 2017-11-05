@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 13:56:39 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/05 14:18:03 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 16:09:04 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	*server_cmd_join(t_env *e, t_server_response *response,
 {
 	char	*rpl;
 	char	*fci;
-	t_chan	*chan;
 
 	(void)server_cmd;
 	if (!(rpl = malloc(sizeof(char) * 510)))
@@ -50,11 +49,12 @@ char	*server_cmd_join(t_env *e, t_server_response *response,
 	ft_strncat(rpl, " ", 510);
 	ft_strncat(rpl, response->raw_msg, 510);
 	ft_strncat(rpl, "\r\n", 512);
-	chan = add_channel(&e->serv->channels, response->split[1]);
+	add_channel(&e->serv->channels, response->split[1]);
 	add_user_to_channel(&e->serv->channels,
 			get_user(e->serv, response->fd->user.nick),
 			response->split[1]);
-	broadcast_msg_channel(e, chan, rpl);
+	broadcast_msg_channel(e,
+			get_chan(e->serv->channels, response->split[1]), rpl);
 	free(rpl);
 	return (NULL);
 }
