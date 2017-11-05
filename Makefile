@@ -6,7 +6,7 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/11/03 18:52:47 by amathias         ###   ########.fr        #
+#    Updated: 2017/11/05 13:30:30 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCSERVER =	main_server.c		\
 			ring_buffer_utils.c	\
 			server_cmd.c		\
 			server_cmd2.c		\
+			server_cmd_login.c	\
 
 SRCCLIENT =	main_client.c		\
 			get_opt.c			\

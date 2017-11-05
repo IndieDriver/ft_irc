@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:24:14 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 15:52:30 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 13:59:23 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ void	clean_fd(t_fd *fd)
 		free(fd->user.nick);
 	if (fd->user.hostname != NULL)
 		free(fd->user.hostname);
-	if (fd->user.user != NULL)
-		free(fd->user.user);
 	fd->user.hostname = NULL;
 	fd->user.nick = NULL;
-	fd->user.user = NULL;
 	fd->user.socket = -1;
 	fd->has_login = 0;
 	rb_reset(&fd->rbuffer_write);
@@ -43,7 +40,6 @@ void	init_fds(t_fd *fd)
 	fd->user.hostname = NULL;
 	fd->user.nick = NULL;
 	fd->user.hostname = NULL;
-	fd->user.user = NULL;
 	fd->user.socket = -1;
 	fd->has_login = 0;
 	rb_reset(&fd->rbuffer_write);

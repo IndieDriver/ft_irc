@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 18:10:37 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 18:48:02 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 14:07:41 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	rename_user(t_env *e, t_user *old_user, char *new_nick)
 
 	chan = e->serv->channels;
 	user.nick = new_nick;
-	user.user = old_user->user;
 	user.hostname = old_user->hostname;
 	while (chan)
 	{
@@ -31,7 +30,8 @@ void	rename_user(t_env *e, t_user *old_user, char *new_nick)
 		chan = chan->next;
 	}
 	remove_user(e->serv, old_user->nick);
-	add_user(e->serv, &user);
+	add_user(e->serv, copy_user(&user));
+	old_user->nick = new_nick;
 }
 
 char	*get_users_string(t_chan *chan)
@@ -81,7 +81,7 @@ void	print_userlist(t_user *begin)
 	{
 		while (list)
 		{
-			printf("%s|%s|%s\n", list->nick, list->user, list->hostname);
+			printf("%s|%s|%s\n", list->nick, list->nick, list->hostname);
 			list = list->next;
 		}
 	}
@@ -90,7 +90,6 @@ void	print_userlist(t_user *begin)
 void	free_user(t_user *user)
 {
 	free(user->nick);
-	free(user->user);
 	free(user->hostname);
 	free(user);
 }

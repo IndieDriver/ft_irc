@@ -6,56 +6,11 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 13:56:39 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 18:50:32 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 14:18:03 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
-
-char	*server_cmd_user(t_env *e, t_server_response *response,
-			t_server_command server_cmd)
-{
-	(void)server_cmd;
-	if (response->fd->user.user != NULL)
-	{
-		free(response->fd->user.user);
-	}
-	response->fd->user.user = ft_strdup(response->split[1]);
-	if (response->fd->user.nick != NULL
-			&& is_nick_free(e->serv->users, response->fd->user.nick))
-	{
-		add_user(e->serv, copy_user(&response->fd->user));
-		response->fd->has_login = 1;
-		return (rpl_welcome(e, response->fd, &response->fd->user));
-	}
-	return (NULL);
-}
-
-char	*server_cmd_nick(t_env *e, t_server_response *response,
-			t_server_command server_cmd)
-{
-	(void)server_cmd;
-	if (is_nick_free(e->serv->users, response->split[1]))
-	{
-		if (response->fd->user.nick != NULL)
-		{
-			rename_user(e, &response->fd->user, response->split[1]);
-			free(response->fd->user.nick);
-		}
-		if (response->fd->user.user != NULL)
-		{
-			//response->fd->user.nick = ft_strdup(response->split[1]);
-			add_user(e->serv, copy_user(&response->fd->user));
-			response->fd->has_login = 1;
-			return (rpl_welcome(e, response->fd, &response->fd->user));
-		}
-		else
-			return (NULL);
-	}
-	else
-		return (rpl_nickinuse(e, response->fd, &response->fd->user));
-	return (NULL);
-}
 
 char	*server_cmd_privmsg(t_env *e, t_server_response *response,
 			t_server_command server_cmd)

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 18:41:37 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 13:44:23 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ t_user				*prefix_to_user(char *prefix);
 char				*user_to_prefix(t_user *user);
 
 char				*rpl_welcome(t_env *e, t_fd *fd, t_user *user);
-char				*rpl_nickinuse(t_env *e, t_fd *fd, t_user *user);
+char				*rpl_nickinuse(t_env *e, t_fd *fd, char *nick);
 
 void				broadcast_msg_channel(t_env *e, t_chan *chan, char *msg);
 void				broadcast_msg_users_channel(t_env *e, char *nick,

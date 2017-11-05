@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:49:38 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:20:20 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 14:00:11 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 typedef struct		s_user
 {
 	char			*nick;
-	char			*user;
 	char			*hostname;
 	int				socket;
 	void			*next;
@@ -46,7 +45,7 @@ int					is_nick_free(t_user *users, char *nick);
 void				add_user_to_list(t_user **users, t_user *user);
 void				remove_user_from_list(t_user **users, char *nick);
 t_user				*get_user(t_serv *serv, char *nick);
-t_user				*new_user(char *nick, char *username, char *hostname,
+t_user				*new_user(char *nick, char *hostname,
 						int socket);
 t_user				*copy_user(t_user *user);
 void				clear_userlist(t_user **users);
