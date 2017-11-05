@@ -6,32 +6,40 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 18:10:37 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/05 14:07:41 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 15:10:15 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bircd.h"
 
+void	rename_user_in_list(t_user **users, char *old_nick, char *new_nick)
+{
+	t_user *tmp;
+
+	tmp = *users;
+	if (tmp == NULL)
+		return ;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->nick, old_nick) == 0)
+		{
+			tmp->nick = new_nick;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	rename_user(t_env *e, t_user *old_user, char *new_nick)
 {
 	t_chan	*chan;
-	t_user	user;
 
 	chan = e->serv->channels;
-	user.nick = new_nick;
-	user.hostname = old_user->hostname;
 	while (chan)
 	{
-		if (is_user_in_channel(chan, old_user->nick))
-		{
-			remove_user_from_channel(e->serv->channels, old_user, chan->name);
-			add_user_to_channel(&e->serv->channels, &user, chan->name);
-		}
+		rename_user_in_list(&chan->users, old_user->nick, new_nick);
 		chan = chan->next;
 	}
-	remove_user(e->serv, old_user->nick);
-	add_user(e->serv, copy_user(&user));
-	old_user->nick = new_nick;
+	rename_user_in_list(&e->serv->users, old_user->nick, new_nick);
 }
 
 char	*get_users_string(t_chan *chan)

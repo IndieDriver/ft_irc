@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 12:09:19 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 16:52:33 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 15:50:59 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,10 @@ char	*handle_server_command(t_env_client *e, char *msg, char **split)
 
 char	*handle_response(t_env_client *e, char *msg, char **split)
 {
-	char				*hostname;
 	char				*cmd;
 	char				*tmp;
 
 	tmp = NULL;
-	hostname = split[0] + 1;
 	cmd = split[1];
 	if (ft_atoi(cmd) != 0)
 	{

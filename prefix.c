@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 14:54:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/05 13:57:50 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 15:50:38 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 t_user	*parse_user_prefix(t_user *user,
 			char *prefix, char *username, char *hostname)
 {
-	if (!(user->nick = malloc(sizeof(char) * (username - prefix) + 1)))
+	size_t nick_len;
+	size_t host_len;
+
+	nick_len = (username - prefix);
+	host_len = (prefix + ft_strlen(prefix)) - hostname;
+	if (!(user->nick = malloc(sizeof(char) * nick_len + 1)))
 		return (NULL);
-	if (!(user->hostname = malloc(sizeof(char) *
-			((prefix + ft_strlen(prefix)) - hostname) + 1)))
+	if (!(user->hostname = malloc(sizeof(char) * host_len + 1)))
 		return (NULL);
-	ft_strncpy(user->nick, prefix, (username - prefix));
-	ft_strncpy(user->hostname, hostname + 1,
-			(((prefix + ft_strlen(prefix) - 1)) - hostname));
+	ft_strncpy(user->nick, prefix, nick_len);
+	user->nick[nick_len] = '\0';
+	ft_strncpy(user->hostname, hostname + 1, host_len - 1);
+	user->hostname[host_len - 1] = '\0';
 	return (user);
 }
 
@@ -32,8 +37,8 @@ t_user	*prefix_to_user(char *prefix)
 	char	*username;
 	char	*hostname;
 
-	username = ft_strstr(prefix, "!");
-	hostname = ft_strstr(prefix, "@");
+	username = ft_strchr(prefix, '!');
+	hostname = ft_strchr(prefix, '@');
 	if (username == NULL || hostname == NULL)
 	{
 		ft_putendl_fd("Invalid prefix <nick>!<user>@<host>", 2);

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:21:47 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:44:23 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/05 14:45:04 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,10 @@ char	*server_evalmsg(t_env *e, t_fd *fd, char *msg)
 	if ((response.raw_msg = ft_strstr(msg, "\r\n")))
 		*response.raw_msg = '\0';
 	response.split = ft_strsplit(msg, ' ');
+	if (response.split == NULL)
+		return (NULL);
 	response.raw_msg = msg;
-	if (response.split != NULL)
-	{
-		res = handle_server_command(e, &response);
-	}
+	res = handle_server_command(e, &response);
 	i = 0;
 	while (response.split[i])
 	{
