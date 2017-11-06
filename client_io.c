@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 15:15:22 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/06 22:06:41 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,31 @@ void	append_msg_server(t_env_client *e, char *msg)
 	rb_put(&e->server_fd.rbuffer_write, msg);
 }
 
+char	*ft_fgets(char *str, int bytes)
+{
+	int i;
+	int r;
+
+	i = 0;
+	if (bytes <= 0)
+		return str;
+	r = read(STDIN_FILENO, str, BUF_SIZE);
+	if (r == -1)
+		return (NULL);
+	str[r] = '\0';
+	i = 0;
+	while (str[i] && i < bytes - 1 )
+	{
+		if (str[i++] == '\n')
+			break;
+	}
+	str[i] = '\0';
+	if (i > 0)
+		return (str);
+	else
+		return (NULL);
+}
+
 void	check_fd_client(t_env_client *e)
 {
 	char *cmd;
@@ -67,7 +92,7 @@ void	check_fd_client(t_env_client *e)
 	if (FD_ISSET(STDIN_FILENO, &e->fd_read))
 	{
 		cmd = ft_strnew(BUF_SIZE);
-		fgets(cmd, BUF_SIZE, stdin);
+		ft_fgets(cmd, BUF_SIZE);
 		if ((tmp = ft_strstr(cmd, "\n")))
 		{
 			*tmp = '\0';
