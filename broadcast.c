@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 10:51:31 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 10:26:20 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 21:07:56 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ void	send_message_to_user(t_env *e, char *user, char *msg)
 	}
 }
 
-void	broadcast_msg_channel(t_env *e, t_chan *chan, char *msg)
+void	broadcast_msg_channel(t_env *e, t_chan *chan, char *msg, char *sender)
 {
 	t_user	*user;
 	int		fd;
 
 	if (chan == NULL || msg == NULL)
+		return ;
+	if (!is_user_in_channel(chan, sender))
 		return ;
 	user = chan->users;
 	while (user)
@@ -57,7 +59,7 @@ void	broadcast_msg_users_channel(t_env *e, char *nick, char *msg)
 	while (chan)
 	{
 		if (is_user_in_channel(chan, nick))
-			broadcast_msg_channel(e, chan, msg);
+			broadcast_msg_channel(e, chan, msg, nick);
 		chan = chan->next;
 	}
 }
@@ -89,7 +91,7 @@ void	broadcast_msg(t_env *e, char *dest, char *msg, char *sender)
 		if (is_user_in_channel(get_chan(e->serv->channels, dest), sender))
 		{
 			broadcast_msg_channel(e, get_chan(e->serv->channels, dest),
-				msg);
+				msg, sender);
 		}
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 14:02:22 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 16:20:45 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 21:10:26 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*server_cmd_users(t_env *e, t_server_response *response,
 	remove_user_from_channel(e->serv->channels,
 			get_user(e->serv, response->fd->user.nick),
 			response->split[1]);
-	broadcast_msg_channel(e, chan, rpl);
+	broadcast_msg_channel(e, chan, rpl, response->fd->user.nick);
 	free(rpl);
 	return (NULL);
 }
