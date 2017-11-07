@@ -6,7 +6,7 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/11/07 17:18:17 by amathias         ###   ########.fr        #
+#    Updated: 2017/11/07 21:21:10 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ SERVER = serveur
 CLIENT = client
 CC = clang
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -pedantic
+CFLAGS = -Wall -Werror -Wextra -pedantic -g
 
 LIB_PATH = ./libft/
 LIB_NAME = -lft

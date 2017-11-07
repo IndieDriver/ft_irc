@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 17:21:59 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 17:42:35 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 21:41:13 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,23 @@
 
 int				rb_contain_message(t_ring_buffer *buffer)
 {
+	size_t	count;
 	char	*ptr;
 	size_t	tail;
 
+	count = 0;
 	if (buffer && !rb_empty(buffer))
 	{
 		tail = buffer->tail;
 		while (ft_strlen(buffer->buffer[tail]) != 0)
 		{
+			if (count >= buffer->size)
+				return (0);
 			ptr = ft_strchr(buffer->buffer[tail], '\n');
 			if (ptr != NULL)
 				return (1);
 			tail = (tail + 1) % buffer->size;
+			count++;
 		}
 	}
 	return (0);
@@ -44,11 +49,11 @@ char			*rb_get_message(t_ring_buffer *buffer)
 		while (ft_strlen(rb_get(buffer)) != 0)
 		{
 			ptr = ft_strchr(rb_get(buffer), '\n');
-			ft_strncat(msg, rb_get(buffer), 510);
+			ft_strncat(msg, rb_get(buffer), 510 - ft_strlen(msg));
 			rb_pop(buffer);
 			if (ptr != NULL)
 			{
-				ft_strncat(msg, "\r\n", 512);
+				ft_strncat(msg, "\r\n", 512 - ft_strlen(msg));
 				break ;
 			}
 		}

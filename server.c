@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:57:11 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 12:44:02 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 21:55:57 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int		is_nick_free(t_user *users, char *nick)
 	tmp_user = users;
 	if (nick == NULL)
 		return (0);
+	if (ft_strchr(nick, '#'))
+	{
+		fprintf(stderr, "Nick can't contain #\n");
+		return (0);
+	}
 	while (tmp_user)
 	{
 		if (ft_strcmp(tmp_user->nick, nick) == 0)
