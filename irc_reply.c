@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:56:55 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 15:12:34 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 17:26:28 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	*rpl_nickinuse(t_env *e, t_fd *fd, char *nick)
 	ft_strncat(rpl, "127.0.0.1 ", 510 - ft_strlen(rpl));
 	ft_strncat(rpl, "443 * ", 510 - ft_strlen(rpl));
 	ft_strncat(rpl, nick, 510 - ft_strlen(rpl));
-	ft_strncat(rpl, " :Nickname is already in use", 510 - ft_strlen(rpl));
+	ft_strncat(rpl, " :Nickname is already in use, /nick <username>",
+			510 - ft_strlen(rpl));
 	ft_strncat(rpl, "\r\n", 512 - ft_strlen(rpl));
 	append_msg_client(e, rpl, fd->user.socket);
 	free(rpl);
