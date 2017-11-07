@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 12:03:28 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 17:02:36 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	read_from_client(t_env *e, int cs)
 	int		r;
 
 	response = ft_strnew(BUF_SIZE);
+	if (response == NULL)
+		return ;
 	r = recv(cs, response, BUF_SIZE, 0);
 	rb_put(&e->fds[cs].rbuffer_read, response);
 	free(response);
