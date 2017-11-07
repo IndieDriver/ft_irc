@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:22:09 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 09:47:42 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 10:20:27 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	read_from_server(t_env_client *e)
 	}
 	else
 	{
-		printf("[%d] message received: %s", e->server_soc,
-				rb_get(&e->server_fd.rbuffer_read));
+		/*printf("[%d] message received: %s", e->server_soc,
+				rb_get(&e->server_fd.rbuffer_read)); */
 		response = client_evalmsg(e, rb_get(&e->server_fd.rbuffer_read));
 		rb_pop(&e->server_fd.rbuffer_read);
 		if (response != NULL)
@@ -44,7 +44,7 @@ void	read_from_server(t_env_client *e)
 
 void	write_to_server(t_env_client *e, char *buffer)
 {
-	printf("[%d] message send: %s", e->server_soc, buffer);
+	//printf("[%d] message send: %s", e->server_soc, buffer);
 	X(-1, send(e->server_soc, buffer, BUF_SIZE, 0), "send");
 	rb_pop(&e->server_fd.rbuffer_write);
 }

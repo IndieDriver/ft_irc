@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 14:54:02 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/05 15:50:38 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 15:14:16 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ char	*user_to_prefix(t_user *user)
 
 	prefix = malloc(sizeof(char) * 510);
 	ft_bzero(prefix, 510);
-	ft_strncat(prefix, user->nick, 510);
-	ft_strncat(prefix, "!", 510);
-	ft_strncat(prefix, user->nick, 510);
-	ft_strncat(prefix, "@", 510);
-	ft_strncat(prefix, user->hostname, 510);
+	ft_strncat(prefix, user->nick, 510 - ft_strlen(prefix));
+	ft_strncat(prefix, "!", 510 - ft_strlen(prefix));
+	ft_strncat(prefix, user->nick, 510 - ft_strlen(prefix));
+	ft_strncat(prefix, "@", 510 - ft_strlen(prefix));
+	ft_strncat(prefix, user->hostname, 510 - ft_strlen(prefix));
 	return (prefix);
 }

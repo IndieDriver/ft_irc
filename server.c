@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:57:11 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 09:44:33 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 12:44:02 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	add_user(t_serv *serv, t_user *user)
 		return ;
 	if (is_nick_free(serv->users, user->nick))
 	{
-		add_user_to_list(&serv->users, user);
+		add_user_to_list(&serv->users, copy_user(user));
 	}
 	else
 	{
-		ft_putendl_fd("nick already in use", 2);
+		fprintf(stderr, "nick already in use\n");
 	}
 }
 
@@ -50,9 +50,7 @@ void	remove_user(t_serv *serv, char *nick)
 	user = get_user(serv, nick);
 	if (user == NULL)
 	{
-		ft_putstr_fd("No user named ", 2);
-		ft_putstr_fd(nick, 2);
-		ft_putendl_fd(" on server", 2);
+		fprintf(stderr, "No user named %s on server\n", nick);
 		return ;
 	}
 	tmp_chan = serv->channels;

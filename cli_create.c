@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:23:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 18:08:41 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 15:08:21 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,17 @@ void	register_connection(t_env_client *e, char *nick)
 	if (nick == NULL)
 		getlogin_r(login, 256);
 	ft_bzero(request, 512);
-	ft_strncat(request, "NICK ", 510);
-	nick ? ft_strncat(request, nick, 510) : ft_strncat(request, login, 510);
-	ft_strncat(request, "\r\n", 512);
+	ft_strncat(request, "NICK ", 510 - ft_strlen(request));
+	nick ? ft_strncat(request, nick, 510 - ft_strlen(request))
+		: ft_strncat(request, login, 510 - ft_strlen(request));
+	ft_strncat(request, "\r\n", 512 - ft_strlen(request));
 	append_msg_server(e, request);
 	ft_bzero(request, 512);
-	ft_strncat(request, "USER ", 510);
-	nick ? ft_strncat(request, nick, 510) : ft_strncat(request, login, 510);
-	ft_strncat(request, " * * :default user", 510);
-	ft_strncat(request, "\r\n", 512);
+	ft_strncat(request, "USER ", 510 - ft_strlen(request));
+	nick ? ft_strncat(request, nick, 510 - ft_strlen(request))
+		: ft_strncat(request, login, 510 - ft_strlen(request));
+	ft_strncat(request, " * * :default user", 510 - ft_strlen(request));
+	ft_strncat(request, "\r\n", 512 - ft_strlen(request));
 	append_msg_server(e, request);
 }
 

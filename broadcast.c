@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 10:51:31 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:48:18 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 10:26:20 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,18 @@ void	broadcast_msg_server(t_env *e, char *msg)
 	}
 }
 
-void	broadcast_msg(t_env *e, char *dest, char *msg)
+void	broadcast_msg(t_env *e, char *dest, char *msg, char *sender)
 {
 	char *tmp;
 
 	tmp = ft_strstr(dest, "#");
-	if (tmp != NULL && tmp == dest)
+	if (tmp != NULL && tmp == dest && sender != NULL)
 	{
-		broadcast_msg_channel(e, get_chan(e->serv->channels, dest), msg);
+		if (is_user_in_channel(get_chan(e->serv->channels, dest), sender))
+		{
+			broadcast_msg_channel(e, get_chan(e->serv->channels, dest),
+				msg);
+		}
 	}
 	else
 	{

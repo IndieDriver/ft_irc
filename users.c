@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 17:46:00 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/05 13:54:43 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 13:11:26 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,22 @@ void	add_user_to_list(t_user **users, t_user *user)
 {
 	user->next = *users;
 	*users = user;
+}
+
+void	print_users(t_user *user)
+{
+	t_user	*list;
+
+	list = user;
+	printf("list:\n");
+	if (list)
+	{
+		while (list)
+		{
+			printf("%s|%s\n", list->nick, list->hostname);
+			list = list->next;
+		}
+	}
 }
 
 void	remove_user_from_list(t_user **users, char *nick)
@@ -30,7 +46,7 @@ void	remove_user_from_list(t_user **users, char *nick)
 		free(tmp);
 		return ;
 	}
-	while (tmp != NULL && ft_strcmp(tmp->nick, nick) == 0)
+	while (tmp != NULL && ft_strcmp(tmp->nick, nick) != 0)
 	{
 		prev = tmp;
 		tmp = tmp->next;

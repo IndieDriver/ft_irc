@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 17:26:21 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 18:18:15 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 13:12:49 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		remove_channel(t_chan **channels, char *name)
 		free(tmp);
 		return ;
 	}
-	while (tmp != NULL && ft_strcmp(tmp->name, name) == 0)
+	while (tmp != NULL && ft_strcmp(tmp->name, name) != 0)
 	{
 		prev = tmp;
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:19:59 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 16:45:29 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 10:58:38 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	srv_create(t_env *e, int port)
 	X(-1, listen(s, 42), "listen");
 	e->fds[s].type = FD_SERV;
 	e->fds[s].fct_read = srv_accept;
-	e->fds[s].user.hostname = inet_ntoa(sin.sin_addr);
+	e->fds[s].user.hostname = ft_strdup(inet_ntoa(sin.sin_addr));
 	printf("server started on port %d\n", port);
 }

@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 09:33:31 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 16:22:48 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*append_arg(char *msg, enum e_arg_type arg_type, char **split,
 
 	if (arg_type == SINGLE || (arg_type == OPTIONAL && split[split_index]))
 	{
-		ft_strncat(msg, split[split_index], 510);
+		ft_strncat(msg, split[split_index], 510 - ft_strlen(msg));
 	}
 	else if (arg_type == MULTI)
 	{
@@ -51,8 +51,8 @@ char	*append_arg(char *msg, enum e_arg_type arg_type, char **split,
 		while (split[i])
 		{
 			if (i != split_index)
-				ft_strncat(msg, " ", 510);
-			ft_strncat(msg, split[i], 510);
+				ft_strncat(msg, " ", 510 - ft_strlen(msg));
+			ft_strncat(msg, split[i], 510 - ft_strlen(msg));
 			i++;
 		}
 	}
@@ -65,10 +65,10 @@ char	*get_command_msg(t_client_command cli_cmd, char **split)
 	int		last_argument;
 
 	last_argument = arg_with_colon(cli_cmd);
-	msg = malloc(sizeof(char) * 510);
+	msg = malloc(sizeof(char) * 512);
 	msg[0] = '\0';
-	ft_strncat(msg, cli_cmd.irc_cmd, 510);
-	ft_strncat(msg, " ", 510);
+	ft_strncat(msg, cli_cmd.irc_cmd, 510 - ft_strlen(msg));
+	ft_strncat(msg, " ", 510 - ft_strlen(msg));
 	msg = append_arg(msg, cli_cmd.arg1, split, 1);
 	last_argument == 2 ? ft_strncat(msg, " :", 510) : ft_strncat(msg, " ", 510);
 	msg = append_arg(msg, cli_cmd.arg2, split, 2);
@@ -76,7 +76,7 @@ char	*get_command_msg(t_client_command cli_cmd, char **split)
 	msg = append_arg(msg, cli_cmd.arg3, split, 3);
 	last_argument == 4 ? ft_strncat(msg, " :", 510) : ft_strncat(msg, " ", 510);
 	msg = append_arg(msg, cli_cmd.arg4, split, 4);
-	ft_strncat(msg, "\r\n", 512);
+	ft_strncat(msg, "\r\n", 512 - ft_strlen(msg));
 	return (msg);
 }
 

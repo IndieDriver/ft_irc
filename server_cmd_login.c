@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 09:35:05 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 09:35:07 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 16:44:23 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ char	*server_cmd_nick(t_env *e, t_server_response *response,
 	if (response->fd->user.nick != NULL)
 	{
 		new_nick = ft_strdup(new_nick);
-		rename_user(e, &response->fd->user, new_nick);
+		rename_user(e, response->fd->user.nick, new_nick);
+		free(response->fd->user.nick);
 		response->fd->user.nick = new_nick;
+		response->fd->has_login = 1;
 		return (rpl_welcome(e, response->fd, &response->fd->user));
 	}
 	else

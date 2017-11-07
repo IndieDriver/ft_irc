@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:21:46 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 09:41:36 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 12:03:28 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	read_from_client(t_env *e, int cs)
 	free(response);
 	if (r <= 0)
 	{
+		printf("disconnecting %d\n", cs);
 		if (e->fds[cs].has_login)
 			remove_user(e->serv, e->fds[cs].user.nick);
 		close(cs);
