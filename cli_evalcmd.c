@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:30 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 17:12:59 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 09:33:31 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*cmd_connect(t_env_client *e, char **split)
 	}
 	else
 		e->port = 6697;
-	//e->port = split[2] != NULL ? ft_atoi(split[2]) : 6697;
 	cli_create(e, split[1], e->port);
 	return (NULL);
 }

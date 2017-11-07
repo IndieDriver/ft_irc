@@ -6,13 +6,14 @@
 #    By: amathias <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 11:09:29 by amathias          #+#    #+#              #
-#    Updated: 2017/11/05 13:30:30 by amathias         ###   ########.fr        #
+#    Updated: 2017/11/07 09:39:10 by amathias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCSERVER =	main_server.c		\
 			get_opt.c			\
 			server_io.c			\
+			io_utils.c			\
 			x.c					\
 			init_fd.c			\
 			srv_create.c		\
@@ -36,6 +37,7 @@ SRCSERVER =	main_server.c		\
 SRCCLIENT =	main_client.c		\
 			get_opt.c			\
 			client_io.c			\
+			io_utils.c			\
 			x.c					\
 			cli_create.c		\
 			init_fd.c			\
@@ -58,7 +60,7 @@ SERVER = serveur
 CLIENT = client
 CC = clang
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -pedantic -g -fsanitize=undefined
+CFLAGS = -Wall -Werror -Wextra -pedantic -g
 
 LIB_PATH = ./libft/
 LIB_NAME = -lft

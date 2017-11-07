@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:57:11 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 18:22:39 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 09:44:33 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,4 @@ void	clear_server(t_env *e)
 	clear_userlist(&e->serv->users);
 	clear_channellist(&e->serv->channels);
 	free(&e->serv);
-}
-
-void	print_serv(t_env *e)
-{
-	print_channellist(e->serv->channels);
-	print_userlist(e->serv->users);
 }

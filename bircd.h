@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/05 13:44:23 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/07 09:45:04 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,9 @@ void				write_to_client(t_env *e, int clientsocket);
 void				append_msg_client(t_env *e, char *msg, int cs);
 void				write_to_server(t_env_client *e, char *buffer);
 void				append_msg_server(t_env_client *e, char *msg);
+
 int					get_client_fd(t_env *e, char *nick);
+char				*ft_fgets(char *str, int bytes);
 
 void				read_from_client(t_env *e, int clientsocket);
 void				read_from_server(t_env_client *e);
@@ -154,7 +156,6 @@ int					is_valid_server_command(t_server_command cli_cmd,
 
 char				*server_evalmsg(t_env *e, t_fd *fd, char *msg);
 void				clear_server(t_env *e);
-void				print_serv(t_env *e);
 void				rename_user(t_env *e, t_user *old_user, char *new_nick);
 
 char				*client_evalmsg(t_env_client *e, char *cmd);
