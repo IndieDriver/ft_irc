@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:25:08 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 16:59:57 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/08 10:01:41 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,6 @@ void		init_env(t_env *e)
 	e->serv->channels = NULL;
 	e->serv->users = NULL;
 	e->hostname = NULL;
-}
-
-void		dummy()
-{
-	(void)malloc(sizeof(int));
 }
 
 int			main(int ac, char **av)

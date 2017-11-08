@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:37:45 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/03 14:47:04 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/08 10:25:30 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int		get_server_command_index(char *str)
 	int i;
 
 	i = 0;
+	if (str == NULL)
+		return (-1);
 	while (i < 6)
 	{
 		if (ft_strstr(str, g_server_commands[i].irc_cmd))

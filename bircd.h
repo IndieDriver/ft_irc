@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:12:24 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 21:07:20 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/08 10:02:49 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,8 @@ void				broadcast_msg_channel(t_env *e, t_chan *chan, char *msg,
 void				broadcast_msg_users_channel(t_env *e, char *nick,
 						char *msg);
 void				broadcast_msg_server(t_env *e, char *msg);
-void				broadcast_msg(t_env *e, char *dest, char *msg, char *sender);
+void				broadcast_msg(t_env *e, char *dest, char *msg,
+						char *sender);
 
 int					rb_contain_message(t_ring_buffer *buffer);
 char				*rb_get_message(t_ring_buffer *buffer);

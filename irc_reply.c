@@ -6,7 +6,7 @@
 /*   By: amathias <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:56:55 by amathias          #+#    #+#             */
-/*   Updated: 2017/11/07 17:26:28 by amathias         ###   ########.fr       */
+/*   Updated: 2017/11/08 10:05:24 by amathias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*rpl_welcome(t_env *e, t_fd *fd, t_user *user)
 	free(fci);
 	ft_strncat(rpl, "\r\n", 512 - ft_strlen(rpl));
 	append_msg_client(e, rpl, fd->user.socket);
-	printf("reply: %s\n", rpl);
 	free(rpl);
 	return (NULL);
 }
